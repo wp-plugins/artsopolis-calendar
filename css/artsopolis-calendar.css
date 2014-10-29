@@ -1,0 +1,1101 @@
+/* 
+    Document   : artsopolis-calendar
+    Author     : vulh
+    Description: Purpose of the stylesheet follows.
+*/
+
+.eli_clear {
+    clear: both;
+    height: auto !important;
+}
+.eli_hidden {
+    display: none !important;
+}
+
+.eli_clearfix:before,
+.eli_clearfix:after {
+    content: " " !important;
+    display: table !important;
+}
+
+.eli_clearfix:after {
+    clear: both !important;
+}
+
+html[xmlns] .eli_clearfix {
+    display: block !important;
+}
+
+* html .eli_clearfix {
+    height: 1% !important;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: arial, sans-serif;
+}
+
+/*===============================ARTSOPOLIS CALENDAR ADMIN=============================================*/
+
+div.warning {
+    background-color: #fff;
+    border-left: 4px solid #FFD900;
+
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+    box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.1);
+    margin: 5px 0 15px;
+    padding: 1px 12px;
+}
+
+div.warning p{
+    padding: .5em 0;
+    margin: 2px;
+}
+
+.artsopolis-calendar .feed-input {
+    width: 200px !important;
+}
+
+.artsopolis-calendar .hndle{
+    cursor: auto !important;
+}
+
+.artsopolis-calendar .child {
+    border: 1px solid #ddd;
+    margin: 0 0 10px;
+}
+.artsopolis-calendar .thumb {
+    right: 20px;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    max-width: 100px;
+    max-height: 63px;
+    top: 0px;
+    margin-left: 1px;
+}
+.artsopolis-calendar .delete-btn, .artsopolis-calendar .delete-btn:hover, 
+.artsopolis-calendar .delete-btn:link {
+    background: url('../img/icon-delete.jpg') no-repeat center;
+    border: none !important;
+    width: 24px;
+    height: 20px;
+    cursor: pointer;
+    
+}
+.artsopolis-calendar .logo-deleting{
+    color: #c33;
+}
+.artsopolis-calendar #artsopolis-calendar-content {
+    background: transparent;
+    border: none;
+}
+
+.artsopolis-calendar h4.hndle {
+    border-bottom: 1px solid #eee;
+    padding: 8px 12px;
+    margin: 0;
+}
+
+.artsopolis-calendar-settings-category .hide-show-subcategory {
+    font-size: 12px;
+    padding-left: 10px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.artsopolis-calendar .w-95-p {
+    width: 566px;
+}
+
+/* --- Override font --- */
+
+.artsopolis-calendar .metabox-holder h3
+{
+    font-size: 18px;
+}
+
+.artsopolis-calendar .metabox-holder h4
+{
+    font-size: 16px;
+}
+
+.artsopolis-calendar .sub-row {
+    margin-left: 50px;
+}
+
+/*//*/
+
+/* Override table */
+
+.artsopolis-calendar .form-table th {
+    width: 220px;
+    padding: 0px;
+    font-weight: normal;
+}
+
+.artsopolis-calendar .form-table td {
+    padding: 0px;
+}
+
+.artsopolis-calendar td.description {
+}
+
+/*//*/
+
+/* Theme input checkbox  */
+
+.artsopolis-calendar .artsopolis-calendar-settings-category .row {
+    display: block;
+    width: 250px;
+    float: left;
+}
+
+.artsopolis-calendar .artsopolis-calendar-settings-category .row label {
+    text-transform: uppercase;
+}
+
+.artsopolis-calendar .artsopolis-calendar-settings-filter-display div.desc{
+    width:  105px;
+    display: block;
+    float: left;
+}
+
+.artsopolis-calendar .artsopolis-calendar-settings-filter-display label {
+    padding: 0 5px;
+}
+
+/*//*/
+
+.artsopolis-calendar #affiliate-key {
+    float: left;
+}
+
+.artsopolis-calendar .artsopolis-calendar-status-container {
+    padding: 0;
+    margin: 3px;
+}
+
+
+
+.artsopolis-calendar .artsopolis-calendar-status-container .artsopolis-calendar-error .artsopolis-calendar-message,
+.artsopolis-calendar .artsopolis-calendar-status-container .artsopolis-calendar-success .artsopolis-calendar-message
+{
+    
+    padding: 2px 0 2px 20px;
+    list-style-type: none;
+}
+
+.artsopolis-calendar .artsopolis-calendar-status-container .artsopolis-calendar-error .artsopolis-calendar-message {
+    background: url('../img/error.png') no-repeat center left transparent;
+    color: #c33;
+}
+
+.artsopolis-calendar .artsopolis-calendar-status-container .artsopolis-calendar-success .artsopolis-calendar-message {
+    background: url('../img/accept.png') no-repeat center left transparent;
+    color: #390;
+}
+
+.artsopolis-calendar .button-primary {
+    float: right;
+}
+
+
+/*==================================== FRONT END CSS =========================================*/
+
+.artsopolis-calendar-frontend {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    min-width: 265px !important;
+    color: #141412;
+}
+
+.artsopolis-calendar-frontend h6.eli_tags.eli_h6 {
+    font-weight: normal;
+	text-transform: uppercase;
+	margin-top: 10px;
+}
+
+.artsopolis-calendar-frontend h6.eli_h6.eli_tags a.eli_a {
+    cursor: pointer;
+}
+
+.artsopolis-calendar-frontend h6.eli_h6.eli_tags a.eli_a:hover {
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend #artsopolis_calendar_map_canvas {
+	width: 100% !important;
+	height: 347px !important;
+} 
+
+.artsopolis-calendar-frontend .eli_m-t-15 {
+    margin-top: 15px !important;
+}
+
+.artsopolis-calendar-frontend .eli_m-t-5 {
+    margin-top: 5px !important;
+}
+
+.artsopolis-calendar-frontend .eli_event-website {
+    width: 100% !important;
+    float: left !important;
+    font-weight: bold;  
+    padding-top: 4px !important;
+}
+
+.artsopolis-calendar-frontend .eli_p-t-10 {
+    padding-top: 10px;
+}
+
+.artsopolis-calendar-frontend h4.eli_h4.eli_heading-bar {
+	background-color: #777777;
+	padding: 6px !important;
+	width: 100% !important;
+	float: left !important;
+	color: #FFFFFF;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 20px;
+	margin-bottom: 15px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail {
+    float: left !important;
+    width: 100% !important;
+}
+
+h4.eli_heading-bar {
+    margin: 0 !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail h6.eli_h6 {
+	width: 100% !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail:children {
+    margin-left: 20px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail .eli_title a.eli_a {
+	text-decoration: none !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail h6.eli_h6,
+.artsopolis-calendar-frontend .eli_row-detail h6.eli_h6 a.eli_a  {
+	float: left !important;
+} 
+
+.artsopolis-calendar-frontend .eli_row-detail .eli_arrow-map{
+	padding-left: 2px !important;
+	box-shadow: none;
+}
+
+.artsopolis-calendar-frontend .eli_font-s-16 {
+	font-size: 16px;
+}
+
+.artsopolis-calendar-frontend i.eli_i.eli_detail-icon {
+	width: 28px !important;
+	height: 30px !important;
+	float: left !important;
+	margin-right: 10px !important;
+	margin-left: 10px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail .eli_full-map {
+    padding: 10px !important;
+    width: 170px !important;
+    line-height: 10px !important;
+    font-weight: bold;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail a.eli_a {
+    color: #000000 !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail .eli_content,
+.artsopolis-calendar-frontend .eli_row-detail.eli_content {
+    padding-left: 15px !important;
+    padding-bottom: 10px !important;
+    float: left !important;
+    width: 100% !important;
+}
+
+.artsopolis-calendar-frontend .eli_admission-icon {
+	background: url('../img/admission-28x30.png') no-repeat;
+	width: 42px !important;
+	height: 35px !important;
+	float: left !important;
+	margin-left: 8px !important;
+}
+
+.artsopolis-calendar-frontend .eli_location-icon {
+    background: url('../img/location-icon-28x30.png') no-repeat;
+}
+
+
+.artsopolis-calendar-frontend .eli_calendar-icon {
+	background: url('../img/small-calendar-icon-28x30.png') no-repeat;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail .eli_row-main {
+    margin-top: 5px !important;
+}
+
+.artsopolis-calendar-frontend .eli_expand-more-dates,
+.artsopolis-calendar-frontend .eli_collapse-more-dates {
+    cursor: pointer;
+    float: left !important;
+    width: 100% !important;
+}
+
+.eli_button.eli_tiny {
+    padding: 0px 18px !important;
+    background-color: #fb6f00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+div.eli_site-content div.eli_entry-content {
+    max-width: 700px !important;
+}
+
+.artsopolis-calendar-frontend .eli_wrap-inner {
+    background-color: transparent;
+}
+
+.artsopolis-calendar-frontend .eli_produce-wrap,
+.artsopolis-calendar-frontend .eli_content-can-filter
+{
+    background-color: #fff;
+}
+
+.artsopolis-calendar-frontend .eli_produce-wrap-inner h2.eli_h2,
+.artsopolis-calendar-frontend .eli_row h4.eli_h4.eli_title a.eli_a {
+    font-style: normal;    
+    font-size: 25pt;
+    color: #333 !important;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.artsopolis-calendar-frontend .eli_produce-wrap-inner h2.eli_h2 {
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+}
+
+.artsopolis-calendar-frontend .eli_produce-wrap-inner p.eli_p {
+    margin-bottom: 0px !important;
+}
+
+
+.artsopolis-calendar-frontend .eli_content-can-filter-inner{
+    padding: 2px !important;
+}
+
+.artsopolis-calendar-frontend .eli_header {
+    
+}
+
+.artsopolis-calendar-frontend .eli_header ul.eli_ul {
+    margin: 0 !important;
+    padding: 17px 0 0 0 !important;
+}
+
+.artsopolis-calendar-frontend .eli_header .eli_cate {
+    float: left !important;
+    list-style-type: none !important;
+    padding: 0 0 17px !important;
+    margin: 0  !important;
+}
+
+.artsopolis-calendar-frontend .eli_header .eli_cate a.eli_a {
+    color: #ccc;
+    text-transform: capitalize;
+    padding: 0px 17px !important;
+    font-size: 16px;
+    border-right: 1px solid #fff;
+    text-decoration: none;
+}
+
+.artsopolis-calendar-frontend .eli_header .eli_cate a.eli_a.eli_active {
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend .eli_header .eli_cate.eli_last a.eli_a {
+    border-right: none;
+}
+
+.artsopolis-calendar-frontend .eli_content-inner {
+    position: relative !important;
+}
+
+#artsopolis-calendar-list-feed {
+    position: relative!important;
+}
+
+.artsopolis-calendar-frontend .eli_content-inner .eli_filter {
+    background-color: #e7e7e7;
+    padding: 17px 17px 4px !important;
+}
+
+.artsopolis-calendar-frontend .eli_content-inner .eli_filter div {
+
+    -webkit-box-sizing: border-box !important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box !important;    /* Firefox, other Gecko */
+    box-sizing: border-box !important;         /* Opera/IE 8+ */
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner input.eli_keyword,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_category-filter>select.eli_select,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_location-filter>select.eli_select,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-from-wrapper>input.eli_input,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-to-wrapper>input.eli_input,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-util>a#artsopolis-calendar-choice-today,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-util>a#artsopolis-calendar-choice-tomorrow,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-util>a#artsopolis-calendar-choice-weekend,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-util>a#reset
+{
+    -webkit-box-sizing: border-box !important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box !important;    /* Firefox, other Gecko */
+    box-sizing: border-box !important;         /* Opera/IE 8+ */
+    margin: 0 3px 13px 0px !important;
+    height: 26px !important;
+    padding: 2px 13px;
+    display: inline-block !important;
+    vertical-align: top !important;
+    float: left !important;
+    line-height: 23px !important;
+}
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-to-wrapper>img,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-from-wrapper>img {
+    margin: 0 3px 13px -3px !important;
+    height: 26px !important;
+    vertical-align: top !important;
+
+    -webkit-box-sizing: border-box !important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box !important;    /* Firefox, other Gecko */
+    box-sizing: border-box !important;         /* Opera/IE 8+ */
+    padding: inherit !important;
+    width: auto !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_input,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_select {
+    padding: 2px 5px !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-to-wrapper,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-filter-from-wrapper{
+    width: 126px !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-inner .eli_date-util>a#artsopolis-calendar-choice-weekend{
+    margin: 0px 40px 13px 0px !important;
+}
+
+.artsopolis-calendar-frontend .eli_content-inner .eli_list {
+    padding: 10px 17px !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item input.eli_input {
+    width: 100px !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item input.eli_input,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item select.eli_select,
+.artsopolis-calendar-frontend .eli_filter a.eli_a.eli_button {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item input.eli_input,
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item select.eli_select {
+    border: 1px solid #ccc;
+    background: #ffffff;
+
+}
+
+.artsopolis-calendar-frontend .eli_filter a.eli_button {
+    font-weight: bold;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item select.eli_select {
+    background: #fff;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_filter-item #reset {
+    background-color: #777777;
+    cursor: pointer;
+}
+
+.artsopolis-calendar-frontend .eli_filter .eli_button {
+    background: #777;
+    color: #fff;
+}
+.artsopolis-calendar-frontend .eli_filter .eli_button.eli_active {
+    background: #82c400 !important;
+}
+
+
+
+span.eli_line {
+    margin: 0 5px  !important;
+    color: #ddd;
+}
+
+#choice-from-date {
+    margin: 0 3px 0 0  !important;
+    height: 21px  !important;
+}
+
+#choice-to-date {
+    margin: 0 12px 0 0  !important;
+    height: 21px  !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter a.eli_button-primary {
+    float:left  !important;
+    background: #1e8cbe;
+}   
+
+/*//*/
+
+/*Row*/
+
+.artsopolis-calendar-frontend .eli_row {
+    margin: 10px 0 0 0  !important;
+    border-bottom: 1px solid #000;
+    padding: 10px 0 5px 0  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row h4.eli_title {
+    margin: 0  !important;
+    padding: 0  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row h4.eli_title a.eli_a{
+    text-decoration: none;
+    margin: 5px 0  !important;
+    padding: 0px  !important;
+    line-height: 35px  !important;
+}
+.artsopolis-calendar-frontend .eli_row h4.eli_title a.eli_a:hover {
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend .eli_row span.eli_address {
+    font-size: 16px;
+    color: #777777;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main {
+    float: left  !important;
+    margin: 0 0 10px 0  !important;
+    width: 100%  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main a.eli_img,
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information
+{
+    float: left  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main a.eli_img {
+    width: 40%  !important;
+    margin: 5px 0 0 0  !important;
+    height: auto  !important;
+    min-height: 100px  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information {
+    width: 60%  !important;
+    padding: 0 0 0 10px  !important;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-inner {
+    width: 100%  !important;
+    float: left  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-left {
+    width: 65%  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-right {
+    width: 35%  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-left,
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-right
+{
+    float: left  !important;
+    min-height: 100px  !important;
+}
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-right .eli_button-container {
+    padding: 2px 0 0  !important;
+}
+
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-left .eli_offer-date {
+    margin: 0 10px 0 0  !important;
+    font-size: 16px;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main img.eli_img {
+    float: left  !important;
+    width: 100%  !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main img.eli_img.eli_fb_icon,
+.artsopolis-calendar-frontend .eli_row .eli_row-main img.eli_img.eli_tw_icon {
+    width: auto !important;
+}
+
+
+.artsopolis-calendar-frontend .eli_row .eli_row-main .eli_expand-summary {
+    text-decoration: none;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_summary p.eli_summary-short,
+.artsopolis-calendar-frontend .eli_row .eli_summary p.eli_summary-full {
+    text-align: justify;
+    margin: 0  !important;
+    padding: 0  !important;
+    font-size: 16px;
+}
+
+.artsopolis-calendar-frontend .eli_inner-full {
+    width: 100% !important;
+}
+
+.artsopolis-calendar-frontend .eli_inner-full input.eli_input.keyword {
+    width: 38% !important;
+    float: left !important;
+}
+
+.artsopolis-calendar-frontend .eli_filter-item .eli_category-filter {
+}
+
+.artsopolis-calendar-frontend .eli_row a.eli_a{
+    color: #333 !important;
+    text-decoration: none;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date,
+.artsopolis-calendar-frontend .eli_row .eli_full-price, 
+.artsopolis-calendar-frontend .eli_row .eli_our-price{
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date {
+    font-size: 12px;
+    font-weight: normal; 
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date br.eli_br{
+    line-height: 22px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date .eli_offer-date-title,
+.artsopolis-calendar-frontend .eli_row .eli_full-price .eli_full-price-title,
+.artsopolis-calendar-frontend .eli_row .eli_our-price .eli_our-price-title
+{
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0 5px 0 0 !important;
+    text-transform: uppercase;
+    color: #999;
+    display: block !important;
+}
+.artsopolis-calendar-frontend .eli_row .eli_offer-date .eli_offer-date-title {
+    font-weight: normal;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_full-price .eli_full-price-title,
+.artsopolis-calendar-frontend .eli_row .eli_our-price .eli_our-price-title {
+    text-align: center;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_full-price .eli_full-price-content,
+.artsopolis-calendar-frontend .eli_row .eli_our-price .eli_our-price-content
+{
+    font-weight: normal;
+    font-size: 24px;
+    display: block !important;
+    text-align: center;
+    line-height: 41px !important;
+}
+.artsopolis-calendar-frontend .eli_row .eli_full-price .eli_full-price-content {
+    color: #999;
+}
+
+.artsopolis-calendar-frontend .eli_full-w-float-l{
+    width: 100% !important;
+    float: left !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_our-price .eli_our-price-content {
+    color: #ff6600;
+}
+
+
+.artsopolis-calendar-frontend .eli_row .eli_button.eli_large {
+    width: auto !important;
+    background: #fb6f00 !important;
+    text-decoration: none;
+    display: block !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: none !important;
+    padding: 10px 8px !important;
+    max-width: 134px !important;
+    
+}
+
+.artsopolis-calendar-frontend .eli_m-r-5 {
+	margin-right: 5px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail {
+	border: 0px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row-detail h6.eli_h6,
+.artsopolis-calendar-frontend .eli_row-detail p.eli_p {
+	margin: 0px !important;
+}
+
+
+.artsopolis-calendar-frontend .eli_row .eli_button.eli_large.eli_green {
+    background: #00bff3 !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_button-container-detail .eli_btn-buy-ticket {
+    width: 134px !important;
+    font-size: 24px;
+    margin: 0px !important;
+    margin-bottom: 10px !important;
+}
+
+.artsopolis-calendar-frontend .eli_button-container-detail {
+	margin-left: 10px !important;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date {
+    width: 100%;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date-content-summary a.eli_a:hover{
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_offer-date-content-full a.eli_a:hover{
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_summary .eli_summary-short a.eli_a:hover{
+    text-decoration: underline;
+}
+
+.artsopolis-calendar-frontend .eli_row .eli_summary .eli_summary-full a.eli_a:hover{
+    text-decoration: underline;
+
+}
+.artsopolis-calendar-frontend .eli_row .eli_button.eli_large span.eli_span {
+    padding: 0px !important;
+    color: #fff;
+    font-size: 13px;
+    display: block !important;
+    font-weight: bold;
+}
+.artsopolis-calendar-frontend .eli_summary-short,
+.artsopolis-calendar-frontend .eli_summary-full {
+    font-size: 16px;
+}
+/*//*/
+
+/* Pagination */
+
+.artsopolis-calendar-frontend .eli_pagination>ul:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.artsopolis-calendar-frontend .eli_pagination>ul{
+    background: #fff;
+    padding: 0 0 0 20px !important;
+}
+
+.artsopolis-calendar-frontend .eli_pagination>ul>li {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    float: left !important;
+}
+
+.artsopolis-calendar-frontend .eli_pagination>ul>li>a,
+.artsopolis-calendar-frontend .eli_pagination>ul>li>span
+{
+    display: inline-block !important;
+    padding: 4px 12px !important;
+    margin-right: 4px !important;
+    border-radius: 3px;
+    border: solid 1px #c0c0c0;
+    background: #444;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+.artsopolis-calendar-frontend .eli_pagination>ul>li>a:hover {
+    background: #346;
+}
+
+.artsopolis-calendar-frontend .eli_pagination>ul>li.active>a,
+.artsopolis-calendar-frontend .eli_pagination>ul>li.active>span{
+    border: solid 1px #c0c0c0;
+    background: #346;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+    color: #fff;
+    text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+    cursor: default;
+}
+/*//*/
+
+/* Loading */
+.artsopolis-calendar-frontend .artsopolis-calendar-loading {
+    position: absolute !important;
+    display: block !important;
+    z-index: 9999 !important;
+    background: url('../img/loading.gif') no-repeat center center transparent;    
+}
+/*//*/
+
+/* Date time picker */
+.ui-datepicker {
+    font-size: 13px !important;
+}
+/*//*/
+
+
+/* CSS FOR MOBILE */
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row .eli_row-main a.eli_img {
+    width: 100% !important;
+    max-width: 250px !important;
+}
+
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row .eli_row-main .eli_information {
+    width: 100% !important;
+}
+
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row .eli_row-main .eli_information .eli_information-inner {
+    margin: 10px 0 0 0 !important;
+}
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_filter .eli_date-filter-from-to {
+}    
+
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row h4.eli_title a.eli_a {
+    font-size: 26px;
+}
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row .eli_button.eli_large{
+    width: 130px !important;
+    
+}
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile  .eli_row .eli_button.eli_large span.eli_span{
+    font-size: 12px;
+} 
+/* END CSS FOR MOBILE */
+
+/* CSS FOR MOBILE SMALL */
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile-small  .eli_row .eli_button.eli_large {
+    width: 115px !important;
+}
+
+.artsopolis-calendar-frontend.artsopolis-calendar-mobile-small  .eli_row .eli_button.eli_large span.eli_span {
+    font-size: 11px;
+}
+
+/* END CSS FOR MOBILE SMALL */
+
+/* OVERRIDE BY DEVICE WIDTH */
+
+@media only screen and (max-width: 480px), (max-width-device: 480px) {   
+  .artsopolis-calendar-frontend .eli_row .eli_row-main a.eli_img {
+    width: 100% !important;
+  }
+
+  .artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information {
+    width: 100% !important;
+  }
+
+  .artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information .eli_information-inner {
+    margin: 10px 0 0 0 !important;
+  }
+  .artsopolis-calendar-frontend .eli_filter .eli_date-filter-from-to {
+  }
+  
+  .artsopolis-calendar-frontend  .eli_row .eli_button.eli_large{
+    width: 130px !important;
+   }
+  .artsopolis-calendar-frontend  .eli_row .eli_button.eli_large span.eli_span{
+    font-size: 12px;
+  } 
+  
+    .artsopolis-calendar-frontend .eli_filter .eli_filter-item #reset {
+    }
+}
+
+
+@media only screen and (max-width: 640px), (max-width-device: 640px) {  
+    .artsopolis-calendar-frontend #filter-by-location {
+        height: 25px !important;
+    }
+    
+}
+/* END OVERRIDE BY DEVICE WIDTH */
+/*=============================================================================================*/
+
+#checking-xml-feed, #checking-category-xml {
+    color: #ff0000;
+}
+
+.eli_powered-by {
+    font-size: 24px;
+    padding-top: 10px !important;
+}
+
+
+#artsopolis-calendar-choice-weekend {
+    margin-right: 40px !important;
+}
+
+.artsopolis-calendar-search-again {
+    cursor: pointer;
+}
+fieldset.teaser-widget-fieldset {
+    border: 1px solid #dddddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+fieldset.teaser-widget-fieldset legend {
+    font-size: 14px;
+}
+.artsopolis-calendar .arts-select {
+    width: 200px;
+}
+
+
+/*** Tabs ***/
+
+.eli_content-inner  .tabs {
+    width:100%;
+    display:inline-block;
+}
+
+.eli_content-inner .tabs .tab-links {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+/*----- Tab Links -----*/
+/* Clearfix */
+.eli_content-inner  .tabs .tab-links:after {
+    display:block;
+    clear:both;
+    content:'';
+    border-bottom: 1px solid #999999;
+}
+
+.eli_content-inner .tabs .tab-links li {
+    float:left;
+    list-style:none;
+    margin-left: 0 !important;
+}
+
+.eli_content-inner .tabs .tab-links li {
+    border: 1px solid #ffffff;
+}
+
+.eli_content-inner .tabs .tab-links a {
+    padding:5px 25px;
+    display:inline-block;
+    background:#cccccc;
+    font-size:16px;
+    color:#ffffff;
+    transition:all linear 0.15s;
+}
+
+.eli_content-inner  .tab-links a:hover {
+    background:#999999;
+    text-decoration:none;
+}
+
+.eli_content-inner .tabs  .tab-links li.active a, li.active a:hover {
+    background:#999999;
+    color:#ffffff;
+}
+
+.eli_content-inner .tabs  .tab-links li.active {
+    position: relative;
+    border: 1px solid #999999;
+    top: 1px;
+}
+.eli_content-inner .tabs  .tab-links li.active:after {
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid #ffffff;
+    height: 2px;
+    width: 100%;
+    background: #999999;
+    left: -1px;
+    bottom:-2px;
+   
+}
+
+/*----- Content of Tabs -----*/
+.eli_content-inner .tabs .tab-content {
+   
+}
+
+.eli_content-inner .tabs .tab {
+    display:none;
+}
+
+.eli_content-inner .tabs .tab.active {
+    display:block;
+}
+
+.artsopolis-calendar-frontend .eli_span {
+    line-height: 1.5 !important;
+}
+
+.artsopolis-calendar-frontend .tab-content .note {
+    padding: 10px;
+}
+
+.artsopolis-calendar-frontend .eli_pagination {
+    margin-top: 10px;
+}
+.artsopolis-calendar-frontend .eli_h6 {
+    font-size: 16px;
+}
