@@ -28,14 +28,16 @@ if (! class_exists("Artsopolist_Calendar_Admin")) {
             wp_enqueue_style('artsopolis-calendar.css', plugins_url('artsopolis-calendar/css/artsopolis-calendar.css'));
             wp_enqueue_style('ac-jquery-fancybox.css', plugins_url('artsopolis-calendar/css/ac-jquery-fancybox.css'));         
         }
-
+        
         public static function ac_admin_menu_plugin() {
             
             add_menu_page('Artsopolis Calendar', 'Artsopolis Calendar', 'administrator', 'admin-artsopolis-calendar', array(__CLASS__,  'ac_admin_plugin_options'));
            
             // Add a submenu of admin menu:
             add_submenu_page('admin-artsopolis-calendar', '', 'Feature Events', 'administrator', 'artsopolis-calendar-featured-events', array(__CLASS__, 'featured_events'));
-//            add_submenu_page('admin-artsopolis-calendar', 'Artsopolis Calendar Options', 'Configuration', 'administrator', 'artsopolis-calendar-config', array(__CLASS__,  'ac_admin_plugin_options'));
+            add_submenu_page('admin-artsopolis-calendar', 'Artsopolis Calendar Options', 'Configuration', 'administrator', 'artsopolis-calendar-config', array(__CLASS__,  'ac_admin_plugin_options'));
+            
+            add_plugins_page('Artsopolis Calendar Options', 'Artsopolis Calendar', 'manage_options', 'admin-artsopolis-calendar', array(__CLASS__,  'ac_admin_plugin_options'));
         }
 
         public static function ac_admin_plugin_options() {
@@ -43,18 +45,18 @@ if (! class_exists("Artsopolist_Calendar_Admin")) {
             if (! current_user_can('manage_options')) {
                 wp_die(__('You do not have sufficient permissions access this page.'));
             }
-
+            
             /*Define ajax url admin*/
             $admin_url = admin_url( 'admin-ajax.php' );
             $artsopolis_calendar_options = get_option('artsopolis_calendar_options');
-            $category_opts = $artsopolis_calendar_options['category'];
+            $category_opts = isset( $artsopolis_calendar_options['category'] ) ? $artsopolis_calendar_options['category'] : array();
             $arr_filters = Artsopolis_Calendar_Shortcode::$arr_filters;
             $arr_filter_settings = array(
                 'Date',
                 'Location'
-            );
+            );  
             
-            self::$categories_url = $artsopolis_calendar_options['category_xml_feed_url'];
+            self::$categories_url = isset( $artsopolis_calendar_options['category_xml_feed_url'] ) ? $artsopolis_calendar_options['category_xml_feed_url'] : '';
             
             $categories = self::get_categories();
           

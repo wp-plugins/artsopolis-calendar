@@ -1,5 +1,12 @@
 (function ($) {
     $(function () {
+        
+        // handle active plugin menu
+        if ( $( '#ac-feature-event-page' ) && $( '#ac-feature-event-page' ).length ) {
+            $( '#menu-plugins' ).addClass('wp-has-current-submenu wp-has-submenu');
+            $( '#menu-plugins > a' ).addClass( 'wp-has-current-submenu' );
+            $( 'a[href="plugins.php?page=admin-artsopolis-calendar"]' ).parent().addClass( 'current' );
+        }
         // Loads the color pickers
 	$('.nav-bg-color').wpColorPicker();
         

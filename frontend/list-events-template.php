@@ -155,8 +155,8 @@ foreach ($events as $event):
 
 
 <?php else: ?>
-    <?php if (isset($ac_options['category']) && $ac_options['category']) { ?>
     <div class="note">
+        <?php if (isset($ac_options['category']) && $ac_options['category']) { ?>
         Your search did not return any matching results. Please <a class="eli_a artsopolis-calendar-search-again">search again</a>.
         <?php } else { ?>
         Please select at least a category to display events <a class="eli_a" href="/wp-admin/plugins.php?page=admin-artsopolis-calendar">Click here</a>
@@ -166,5 +166,4 @@ foreach ($events as $event):
             artsopolis_calendar_paging.total_event = 0;
         </script>
     </div>
-    
 <?php endif; ?>

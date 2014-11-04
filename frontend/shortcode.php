@@ -82,10 +82,10 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             
             $locations = array_values($_locations);
             asort($locations);
-            
+           
             // Get the category array for filter
-            $category_data = self::_process_category_opt($ac_category);
-            
+            $category_data = self::_process_category_opt( isset( $ac_category ) ? $ac_category : '' );
+           
 			if (isset($_GET['event_id']) && $_GET['event_id']) {
                 $event_id = $_GET['event_id'];
                 $event = $xml->xpath("event[eventID=$event_id]");
@@ -100,7 +100,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
 				// Get the list events and some value for the template
 	            $events = self::get_list_events_data(array(
                     'page'      => 1, 
-                    'category'  => $category_data['categories'],
+                    'category'  => isset( $category_data['categories'] ) ? $category_data['categories'] : array(),
                     'first_tab'   => true, // Filter all events has date end less than 2037-01-01 for second tab
                 ));
 	            
@@ -112,7 +112,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
                     session_start();
                 }
                
-	            $html_events = self::get_html_list_events($events, array('page' => 1), $category_data['keys']);
+	            $html_events = self::get_html_list_events($events, array('page' => 1), isset( $category_data['keys'] ) ? $category_data['keys'] : '' );
 			}
 			
             // Render html and return
@@ -202,13 +202,13 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             }
             
             $xml = simplexml_load_file(XML_FILE_PATH);
-            
+           
 //            if ( isset( $arr_filter['first_tab'] ) && !$arr_filter['first_tab'] ) {
 //                $arr_filter['date_end_ongoing'] = '01-01-2037';
 //            }
             
             $xpath_query = self::_get_xpath_query($arr_filter);
-           
+       
             $events = $xml->xpath($xpath_query);
 
             // Get options from the settings
@@ -254,7 +254,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
         private static function _get_xpath_query($arr_filter) {
             $key_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $key_lowercase = 'abcdefghijklmnopqrstuvwxyz';
-            
+          
             $arr_condition = array();
            
             // Change the operator to OR if we select the this weedken
@@ -278,7 +278,12 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
            
             if ( isset( $arr_filter['first_tab'] ) && $arr_filter['first_tab'] ) {
                 $arr_condition[] = " eventDatesTimes/datetime/date_filter <= 20370101 ";
+                $arr_condition[] = " eventDateEnd != '01-01-2037' "; 
             } else {
+                // Only filter event in the front end. So we make it avoid filter in 
+                // featured events
+                
+                if ( is_admin() && $_REQUEST['page'] !== 'artsopolis-calendar-featured-events' )
                 $arr_condition[] = " eventDateEnd = '01-01-2037' "; 
             }
             
@@ -358,6 +363,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
         
         /* Define callback ajax function */
         public static function ac_get_feed() {
+
             // The $_REQUEST contains all the data sent via ajax
             if (isset($_REQUEST['page'])) {
                 $page         = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : 1;
@@ -386,8 +392,8 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
                 $ac_options = get_option('artsopolis_calendar_options');
                 
                 // Get the category array for filter
-                $category_data = self::_process_category_opt($ac_options['category']);
-                $html = self::get_html_list_events($arr_events, $arr_filter, $category_data['keys']);
+                $category_data = self::_process_category_opt( isset( $ac_options['category'] ) ? $ac_options['category'] : '' );
+                $html = self::get_html_list_events($arr_events, $arr_filter,  isset( $category_data['keys'] ) ? $category_data['keys'] : '' );
                
                 echo json_encode( array( 
                     'html' => utf8_encode($html),

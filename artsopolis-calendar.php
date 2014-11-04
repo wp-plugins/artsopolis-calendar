@@ -2,7 +2,7 @@
 
 /**
  * @package Artsoplis Calendar plugin
- * @version 1.4
+ * @version 1.4.1
  */
 /*
   Plugin Name: Artsoplis Calendar
@@ -10,7 +10,7 @@
   Description: Artsoplis Calendar
   Author: Artsopolis
   Author URI: www.artsopolis.com
-  Version: 1.4
+  Version: 1.4.1
  */
 
 /* Remove options when uninstall */
@@ -212,7 +212,7 @@ if (! class_exists('Artsopolis_Calendar_API')) {
          */
         public static function save_xml_data() {
             $data = self::get_request_content(self::$feed_url);
-           
+
             if ($data) {
                 
                 self::_create_dir( CALENDAR_UPLOAD_DIR );
@@ -222,7 +222,7 @@ if (! class_exists('Artsopolis_Calendar_API')) {
                 if (! is_writable(XML_FILE_PATH)) {
                     @chmod(XML_FILE_PATH, 0777);
                 }
-               
+                
                 $result = @file_put_contents(XML_FILE_PATH, $data);
                 if ($result  === false) {
                     exit('Please set write permission for '.CALENDAR_UPLOAD_DIR.'/'.ac_get_current_domain().' folder');
@@ -257,8 +257,8 @@ if (! class_exists('Artsopolis_Calendar_API')) {
         public static function get_categories() {
             $data = @simplexml_load_string(self::get_request_content(self::$categories_url));
             $result = array();
-            
-            if ( ! $data ) {
+                
+            if ( ! is_object( $data ) ) {
                 return array();
             }
             

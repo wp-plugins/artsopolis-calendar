@@ -1,5 +1,5 @@
 <?php
-$upload_dir = wp_upload_dir();
+$_upload_dir = WP_CONTENT_DIR. '/uploads';
 
 // Default value for Teaser Widget
 define('TEASER_WIDGET_DEFAULT_TITLE', 'Featured Events');
@@ -12,8 +12,7 @@ define('TEASER_WIDGET_DEFAULT_LOGO_POSITION', 'b_right');
 define('TEASER_WIDGET_DEFAULT_ROUNDED_CORNER_RADIUS', 5);
 
 // Config for the xml process data
-
-define('CALENDAR_UPLOAD_DIR', $upload_dir['basedir']. '/artsopolis-calendar' );
+define('CALENDAR_UPLOAD_DIR', $_upload_dir . '/artsopolis-calendar' );
 define('XML_FILE_PATH', CALENDAR_UPLOAD_DIR. '/'. ac_get_current_domain() .'/artsopolis-calendar.xml');
 define('OVERRIDE_TIME_XML_FILE', 1);  // The time after creating the file for auto overriding xml feed file
 define('TIMEOUT_REQUEST_GET_XML_CONTENT', 1000);

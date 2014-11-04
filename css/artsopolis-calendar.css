@@ -1099,3 +1099,35 @@ fieldset.teaser-widget-fieldset legend {
 .artsopolis-calendar-frontend .eli_h6 {
     font-size: 16px;
 }
+ul.artsopolis-calendar-tabs-menu {
+   width: 100%;
+    float: left;
+    border-bottom: 1px solid #cccccc; 
+    margin-bottom: 20px;
+}
+
+ul.artsopolis-calendar-tabs-menu li {
+    float: left;
+    margin: auto;
+    font-size: 17px;
+}
+ul.artsopolis-calendar-tabs-menu li a {
+    color: #444;
+    padding: 10px;
+    text-decoration: none;
+    float: left;
+    text-align: left;
+}
+ul.artsopolis-calendar-tabs-menu li.active {
+    background: #cccccc;
+}
+ul.artsopolis-calendar-tabs-menu li.active a {
+    cursor: default;
+}
+ul.artsopolis-calendar-tabs-menu li.active a:hover {
+    background: none;
+    color: #444;
+}
+#toplevel_page_admin-artsopolis-calendar {
+    display: none;
+}

@@ -7,7 +7,7 @@ Requires at least: 3.3
 
 Tested up to: 4.0
 
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPLv2 or later
 
 
@@ -91,6 +91,8 @@ Artsopolis Calendar provides Artsopolis Network members with a attractive and se
 = 1.3.4 =
 * Fix css for "teaser widget"
 
+
+
 = 1.3.5 =
 * Allow configure rounded/squared corners title bar of "teaser widget"
 
@@ -99,3 +101,7 @@ Artsopolis Calendar provides Artsopolis Network members with a attractive and se
 = 1.4 =
 * Fix bug subcat is empty
 * Separate Current & Upcoming and Ongoing events tabs
+
+
+= 1.4.1 =
+* Fix error messages* Fix ongoing events placement bug

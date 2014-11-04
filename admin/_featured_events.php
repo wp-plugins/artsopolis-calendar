@@ -1,4 +1,5 @@
-<div class="wrap"><style>input[type='text'] { width:200px; padding:4px; } </style>
+<?php require_once '_admin_menu.php'; ?>
+<div class="wrap clear"><style>input[type='text'] { width:200px; padding:4px; } </style>
     <input type="hidden" id="artsopolis-calendar-selected-events" name="artsopolis-calendar-selected-events" value="<?php if ( is_array($selected_events) && !empty($selected_events) ) echo implode(',', $selected_events); ?>" />
     <fieldset>
 	<legend><h2>Featured Events Listing</h2></legend>
@@ -59,3 +60,5 @@
         <form>
 	</fieldset>
 </div>
+
+<input type="hidden" id="ac-feature-event-page" value="1" />

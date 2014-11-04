@@ -2,7 +2,7 @@
 // $is_show_error: show error or not
 // $is_show_error == false mean: at the first time don't save any api
 ?>
-
+<?php require_once '_admin_menu.php'; ?>
 <div class="wrap artsopolis-calendar">
     <?php settings_errors(); ?>
     <div id="icon-edit-pages" class="icon32"></div>
@@ -20,7 +20,7 @@
             <!--titlediv-->
             <div id="titlediv">
                 <div id="titlewrap">
-                    <input type="text" name="artsopolis_calendar_options[title]" size="30" value="<?php echo $artsopolis_calendar_options['title'] ?>" id="title" autocomplete="off" placeholder="Enter the title">
+                    <input type="text" name="artsopolis_calendar_options[title]" size="30" value="<?php echo isset( $artsopolis_calendar_options['title'] ) ? $artsopolis_calendar_options['title'] : '' ?>" id="title" autocomplete="off" placeholder="Enter the title">
                 </div>
                 <div class="inside">
                     <div id="edit-slug-box" class="hide-if-no-js">

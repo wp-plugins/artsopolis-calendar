@@ -225,7 +225,7 @@ var delay       = 500, // Delay key up search event
         
         // It mean you click on the tags category
         if (tags_category) {
-            console.log(tags_category, category_list.split(','))
+           
             if ($.inArray(tags_category, category_list.split(',')) != -1) {
                 category = tags_category+ '[+]'+ $('#tags-category').attr('category-name');
                 $('#filter-by-category').val(category);
