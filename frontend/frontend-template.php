@@ -133,8 +133,8 @@ $logo_position = explode('_', $ac_options['plugin_logo_position']);
                         
                         <div id="artsopolis-calendar-tabs-events" class="tabs <?php if ( isset( $_GET['event_id'] ) && $_GET['event_id'] ) { echo ' eli_hidden '; $html_events = ''; } ?>">
                             <ul class="tab-links">
-                                <li class="active"><a href="#current-upcoming">Current & Upcoming</a></li>
-                                <li id="ongoing-tab"><a href="#ongoing">Ongoing</a></li>
+                                <li class="active"><a data-id="current-upcoming" href="#current-upcoming">Current & Upcoming</a></li>
+                                <li id="ongoing-tab"><a data-id="ongoing" href="#ongoing">Ongoing</a></li>
                             </ul>
 
                             <div class="tab-content">

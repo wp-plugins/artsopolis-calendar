@@ -1,16 +1,16 @@
 <?php
 
 /**
- * @package Artsoplis Calendar plugin
+ * @package Artsopolis Calendar plugin
  * @version 1.4.1
  */
 /*
-  Plugin Name: Artsoplis Calendar
+  Plugin Name: Artsopolis Calendar
   Plugin URI: http://wordpress.org/plugins/artsopolis-calendar/
-  Description: Artsoplis Calendar
+  Description: Artsopolis Calendar
   Author: Artsopolis
   Author URI: www.artsopolis.com
-  Version: 1.4.1
+  Version: 1.4.2
  */
 
 /* Remove options when uninstall */

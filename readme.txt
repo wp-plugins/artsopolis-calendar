@@ -7,7 +7,7 @@ Requires at least: 3.3
 
 Tested up to: 4.0
 
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 
 
@@ -105,3 +105,6 @@ Artsopolis Calendar provides Artsopolis Network members with a attractive and se
 
 = 1.4.1 =
 * Fix error messages* Fix ongoing events placement bug
+
+= 1.4.2 =
+* Fix ongoing events tab bug: frontend/frontend-template.php and js/artsopolis-calendar.js

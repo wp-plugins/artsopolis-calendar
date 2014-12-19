@@ -135,10 +135,10 @@ var delay       = 500, // Delay key up search event
         
         /* Handle tabs */
         $( '.eli_content-inner .tabs .tab-links a' ).on( 'click', function (e) {
-            var currentAttrValue = $(this).attr('href');
+            var currentAttrValue = $(this).attr('data-id');
 
             // Show/Hide Tabs
-            $('.tabs ' + currentAttrValue).show().siblings().hide();
+            $('.tabs #' + currentAttrValue).show().siblings().hide();
 
             // Change/remove current tab to active
             $(this).parent('li').addClass('active').siblings().removeClass('active');
