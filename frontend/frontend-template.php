@@ -27,7 +27,7 @@ $logo_position = explode('_', $ac_options['plugin_logo_position']);
         <?php endif; ?>
         <?php if ($logo_position[0] == 't' || $logo_position[0] == 'tb'): ?>
         <div style="text-align: <?php echo isset($logo_position[1]) && $logo_position[1] ? $logo_position[1] : 'right' ?>">
-            <a href="<?php echo $ac_options['teaser_widget_logo_link_to'];  ?>" target="_blank">
+            <a href="<?php echo isset( $ac_options['main_logo_link_to'] ) ? $ac_options['main_logo_link_to'] : '';  ?>" target="_blank">
             <?php if (  $ac_options['plugin_logo_url'] ): ?>
                 <img  src="<?php echo $ac_options['plugin_logo_url'];  ?>" />
             <?php endif; ?>
@@ -178,10 +178,10 @@ $logo_position = explode('_', $ac_options['plugin_logo_position']);
 </div><!-- #wrap -->
 <?php if ($logo_position[0] == 'b' || $logo_position[0] == 'tb'): ?>
 <div style="text-align: <?php echo isset($logo_position[1]) && $logo_position[1] ? $logo_position[1] : 'right' ?>">
-    <a href="<?php echo $ac_options['teaser_widget_logo_link_to'];  ?>" target="_blank">
+    <a href="<?php echo isset( $ac_options['main_logo_link_to'] ) ? $ac_options['main_logo_link_to'] : '';  ?>" target="_blank">
     <?php if (  $ac_options['plugin_logo_url']  ): ?>    
         <img src="<?php echo $ac_options['plugin_logo_url'];  ?>" />
     <?php endif; ?>
     </a>
-</div>
+</div>  
 <?php endif; ?>

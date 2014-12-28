@@ -22,7 +22,7 @@
 ?>
 
 <?php 
-if ($logo_position[0] == 't' || $logo_position[0] == 'tb'): ?>
+if ( ( $logo_position[0] == 't' || $logo_position[0] == 'tb' ) && isset( $ac_options['teaser_widget_logo_url'] ) && $ac_options['teaser_widget_logo_url'] ): ?>
     <div style="text-align: <?php echo isset($logo_position[1]) && $logo_position[1] ? $logo_position[1] : 'right' ?>">
         <img src="<?php echo $ac_options['teaser_widget_logo_url'];  ?>" />
     </div>
@@ -112,7 +112,7 @@ if (! empty($featured_events) ) { ?>
 <p class="view-more-events"><a href='<?php echo get_site_url(). '/'. $ac_options['calendar_slug'] ?>'>&raquo; View more events</a></p>
 <?php endif;
 
-if ($logo_position[0] == 'b' || $logo_position[0] == 'tb'): ?>
+if ( ( $logo_position[0] == 'b' || $logo_position[0] == 'tb' ) && isset( $ac_options['teaser_widget_logo_url'] ) && $ac_options['teaser_widget_logo_url'] ): ?>
     <div style="text-align: <?php echo isset($logo_position[1]) && $logo_position[1] ? $logo_position[1] : 'right' ?>">
         <a href="<?php echo $ac_options['teaser_widget_logo_link_to'];  ?>" target="_blank"><img src="<?php echo $ac_options['teaser_widget_logo_url'];  ?>" /></a>
     </div>

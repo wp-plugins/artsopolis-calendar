@@ -290,6 +290,15 @@
                                             </td>
                                         </tr>
                                         
+                                        <tr valign="top">
+                                            <th scope="row">
+                                                <label for="settings-display-color">Link to:</label>
+                                            </th>
+                                            <td>
+                                                <input name="artsopolis_calendar_options[main_logo_link_to]" type="text" id="main-logo-link-to" value="<?php echo isset( $artsopolis_calendar_options['main_logo_link_to'] ) ? $artsopolis_calendar_options['main_logo_link_to'] : '' ?>" class="regular-text code">
+                                            </td>
+                                        </tr>
+                                        
                                     </tbody>
                                 </table>    
                             </div>

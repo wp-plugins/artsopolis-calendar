@@ -2,7 +2,7 @@
 
 /**
  * @package Artsopolis Calendar plugin
- * @version 1.4.1
+ * @version 1.4.3
  */
 /*
   Plugin Name: Artsopolis Calendar
@@ -10,7 +10,7 @@
   Description: Artsopolis Calendar
   Author: Artsopolis
   Author URI: www.artsopolis.com
-  Version: 1.4.2
+  Version: 1.4.3
  */
 
 /* Remove options when uninstall */
