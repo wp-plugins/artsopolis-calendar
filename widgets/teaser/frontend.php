@@ -79,7 +79,7 @@ if (! empty($featured_events) ) { ?>
                 // Custom url follow the permalink structure
                 $url_ext_sign = ! get_option('permalink_structure') ? '&' : '?';
                 $parent_link = get_site_url().'/'. $ac_options['calendar_slug'];
-                $link = $parent_link. $url_ext_sign .'event_id='. $event->eventID;
+                $link = $parent_link. $url_ext_sign .'event_id='. $event->eventID. ( isset($instance['teaser_widget_feed_id']) && $instance['teaser_widget_feed_id'] ? '&fid='.$instance['teaser_widget_feed_id'] : '' );
                 $target = '';
             }
         

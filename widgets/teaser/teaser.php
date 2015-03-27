@@ -23,6 +23,7 @@ class artsopolis_calendar_teaser_widget extends WP_Widget {
     // Widget Backend 
     public function form( $instance ) {
        
+        $feed_id                = isset( $instance['teaser_widget_feed_id'] ) ? $instance['teaser_widget_feed_id'] : '';
         $title                  = isset( $instance['title'] ) ? $instance['title'] : TEASER_WIDGET_DEFAULT_TITLE;
         $bg_color               = isset( $instance['bg_color'] ) ? $instance['bg_color'] : TEASER_WIDGET_DEFAULT_BG_COLOR;
         $title_color            = isset( $instance['title_color'] ) ? $instance['title_color'] : TEASER_WIDGET_DEFAULT_TITLE_COLOR;
@@ -49,6 +50,7 @@ class artsopolis_calendar_teaser_widget extends WP_Widget {
     public function update( $new_instance, $old_instance ) {
         
         $instance = array();
+        $instance['teaser_widget_feed_id']  = isset( $new_instance['teaser_widget_feed_id'] ) ? strip_tags( $new_instance['teaser_widget_feed_id'] ) : '';
         $instance['title']                  = ! empty( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
         $instance['bg_color']               = !empty( $new_instance['bg_color'] ) ? strip_tags($new_instance['bg_color']) : '';
         $instance['title_color']            = !empty( $new_instance['title_color'] ) ? strip_tags($new_instance['title_color']) : '';
@@ -72,12 +74,15 @@ class artsopolis_calendar_teaser_widget extends WP_Widget {
      */
     public function widget( $args, $instance ) {
         
-        $featured_events = Artsopolis_Calendar_Shortcode::get_featured_events();
-        $ac_options = get_option('artsopolis_calendar_options');
+        $fid = isset( $instance['teaser_widget_feed_id'] ) ? $instance['teaser_widget_feed_id'] : '';
+        $option_key = Artsopolis_Calendar_API::get_option_key($fid);
+        
+        $featured_events = Artsopolis_Calendar_Shortcode::get_featured_events( $fid );
+        $ac_options = get_option( $option_key );
+        
         if ( empty( $featured_events ) || ! $instance['num_events'] )  return false;
         
         $num_display_widget = count($featured_events) > $instance['num_events'] ? $instance['num_events'] : count($featured_events);
-        $ac_options = get_option('artsopolis_calendar_options');
         
         ob_start();
         include dirname(__FILE__). '/frontend.php';

@@ -1,8 +1,57 @@
 (function ($) {
     $(function () {
         
+        $( '#artsopolis-calendar-settings-form input[type="submit"]' ).click( function() {
+            var error = false;
+            
+            var _arr_urls = $('.artsopolist-calendar-input-url');
+            var urlregex = new RegExp(
+            "^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
+    
+            $.each( _arr_urls, function(i, v) {
+                
+                if ( $( v ).val() && ! urlregex.test( $( v ).val() ) ) {
+                    $( '#apollo-notice' ).show();
+                    $( v ).addClass( 'apollo-input-error' );
+                    $( '[data-id=\"'+$( v ).attr( 'name' ) +'-url\"]' ).show();
+                    error = true;
+                } else {
+                    $( '[data-id="'+$( v ).attr( 'name' ) +'-url"]' ).hide();
+                    $( v ).removeClass( 'apollo-input-error' );
+                }
+                
+            });
+            
+            if ( error ) {
+                $( '.updated.settings-error' ).hide();
+                $( '.error.settings-error' ).show();
+                $('html,body').animate({ scrollTop: $('.artsopolis-calendar-tabs-menu').offset().top }, 1000);
+                return false;
+            }
+        });
+        $(".artsopolist-calendar-input-url[type=text]").bind( 'keyup change', check_url );
+        $( '.artsopolist-calendar-input-url' ).focus(function() {
+            if ( ! $(this).val() ) {
+                $(this).val('http://');
+            }
+        });
+
+        $( '#wrapper-category' ).on( 'click', '.sub-row label', function() {
+            var checkbox = $( this ).prev();
+            if ( ! checkbox.attr('checked' ) ) {
+                checkbox.attr( 'checked', 'checked' );
+            } else {
+                checkbox.removeAttr( 'checked' );
+            }    
+        } );
+        
+        $( '#ac-filter-by-feed' ).change( function() {
+            window.location.href = $(this).data().href + $(this).val();
+        });
+        
         // handle active plugin menu
-        if ( $( '#ac-feature-event-page' ) && $( '#ac-feature-event-page' ).length ) {
+        if ( ( $( '#ac-feature-event-page' ) && $( '#ac-feature-event-page' ).length )
+                || $( '#ac-feed-frm' ) && $( '#ac-feed-frm' ).length ) {
             $( '#menu-plugins' ).addClass('wp-has-current-submenu wp-has-submenu');
             $( '#menu-plugins > a' ).addClass( 'wp-has-current-submenu' );
             $( 'a[href="plugins.php?page=admin-artsopolis-calendar"]' ).parent().addClass( 'current' );
@@ -22,10 +71,13 @@
         
         $('#artsopolis-calendar-settings-form').submit(check_artsopolis_calendar_form);
         $('#ac-show-list-territory').click(show_territories);
-        $('input[name="artsopolis_calendar_options[feed_url]"]').keyup(function (e) {
+        
+        $('input[name^="artsopolis_calendar_options"][name$="[feed_url]"]').keyup(function (e) {
+        
             // Not ctrl v, ctrl a, f5, tab, ctrl c 
             if (e.keyCode != 17 && e.keyCode != 65 && e.keyCode != 67 && e.keyCode != 9 && e.keyCode != 116) { 
                 clearTimeout($.data(this, 'timer'));
+                
                 if (e.keyCode == 13) {
                     artsopolis_calendar_check_feed_url();
                 }
@@ -34,9 +86,9 @@
                 
             }
         });
-        $('input[name="artsopolis_calendar_options[feed_url]"]').focus(artsopolis_calendar_check_feed_url_empty);
+        $('input[name^="artsopolis_calendar_options]"][name$="[feed_url"]').focus(artsopolis_calendar_check_feed_url_empty);
         $('.artsopolis-calendar-settings-category .hide-show-subcategory').bind('click', hide_show_subcategory);
-        $('input[name="artsopolis_calendar_options[category_xml_feed_url]"]').keyup(function (e) {
+        $('input[name^="artsopolis_calendar_options"][name$="[category_xml_feed_url]"]').keyup(function (e) {
             
             // Not ctrl v, ctrl a, f5, tab, ctrl c
             if (e.keyCode != 17 && e.keyCode != 65 && e.keyCode != 67 && e.keyCode != 9 && e.keyCode != 116) { 
@@ -55,9 +107,9 @@
     
     function check_artsopolis_calendar_form() {
         var messages    = '',
-            main_focus  = $('input[name="artsopolis_calendar_options[feed_url]"]');
+            main_focus  = $('input[name^="artsopolis_calendar_options"][name$="[feed_url]"]');
    
-        if ($('input[name="artsopolis_calendar_options[feed_valid]"]').val() == "0") {
+        if ($('input[name^="artsopolis_calendar_options"][name$="[feed_valid]"]').val() == "0") {
             messages += '\n + The XML feed is invalid';
             messages = "Warning:\n" + messages + "\n\n  Do you want to continue ?";
         } else {
@@ -83,24 +135,24 @@
     }
     
     function artsopolis_calendar_check_feed_url(callback) {
-        var feed_url = $('input[name="artsopolis_calendar_options[feed_url]"]').val();
+        var feed_url = $('input[name^="artsopolis_calendar_options"][name$="[feed_url]"]').val();
         
         if (feed_url.length < 3 || ! feed_url.length) {
             $('#checking-xml-feed').hide();
             
             $('.xml-feed .artsopolis-calendar-error').show();
             $('.xml-feed .artsopolis-calendar-success').hide();
-            $('input[name="artsopolis_calendar_options[feed_valid]"]').val(0);
+            $('input[name^="artsopolis_calendar_options"][name$="[feed_valid]"]').val(0);
             artsopolis_calendar_hide_loading();
             return false;
         }
-        
+     
         $('.xml-feed .artsopolis-calendar-success').hide();
         $('.xml-feed .artsopolis-calendar-error').hide();
         $('#checking-xml-feed').show();
         artsopolis_calendar_show_loading();
         $('#artsopolis-calendar-settings-form #submit').prop('disabled', true);
-
+      
         $.ajax({
             url: artsopolis_calendar_obj.admin_url,
             type: 'post',
@@ -118,18 +170,18 @@
                 if (parseInt(res)) {
                     $('.xml-feed .artsopolis-calendar-error').hide();
                     $('.xml-feed .artsopolis-calendar-success').show();
-                    $('input[name="artsopolis_calendar_options[feed_valid]"]').val(1);
+                    $('input[name^="artsopolis_calendar_options"][name$="[feed_valid]"]').val(1);
                 } else {
                     $('.xml-feed .artsopolis-calendar-error').show();
                     $('.xml-feed .artsopolis-calendar-success').hide();
-                    $('input[name="artsopolis_calendar_options[feed_valid]"]').val(0);
+                    $('input[name^="artsopolis_calendar_options"][name$="[feed_valid]"]').val(0);
                     success = false;
                 }
 
                 if ($('input[name=feed_hidden]').val() != feed_url) {
-                    $('input[name="artsopolis_calendar_options[has_changed]"]').val(1);
+                    $('input[name^="artsopolis_calendar_options"][name$="[has_changed]"]').val(1);
                 } else {
-                    $('input[name="artsopolis_calendar_options[has_changed]"]').val(0);
+                    $('input[name^="artsopolis_calendar_options"][name$="[has_changed]"]').val(0);
                 }
                 
                 if (typeof(callback) === 'function') {
@@ -155,14 +207,14 @@
     
     
     function artsopolis_calendar_check_category_xml_feed(callback) {
-        var url = $('input[name="artsopolis_calendar_options[category_xml_feed_url]"]').val();
+        var url = $('input[name^="artsopolis_calendar_options"][name$="[category_xml_feed_url]"]').val();
 
         if (! url.length) {
             $('.xml-category .artsopolis-calendar-error').show();
             $('#wrapper-category').html('');
             
             $('.xml-category .artsopolis-calendar-success').hide();
-            $('input[name="artsopolis_calendar_options[category_valid]"]').val(0);
+            $('input[name^="artsopolis_calendar_options"][name$="[category_valid]"]').val(0);
             return false;
         }
         
@@ -171,7 +223,8 @@
             type: 'post',
             data: {
                 'action': 'ac_check_valid_category_xml_url',
-                'category_xml_feed_url': encodeURI(url)
+                'category_xml_feed_url': encodeURI(url),
+                'fid' : $( '#ac-feed-id' ).val(),
             },
             beforeSend: function() {
                 $('#checking-category-xml').attr('is-checking', 1);
@@ -188,11 +241,11 @@
                 if (res) {
                     $('.xml-category .artsopolis-calendar-error').hide();
                     $('.xml-category .artsopolis-calendar-success').show();
-                    $('input[name="artsopolis_calendar_options[category_valid]"]').val(1);
+                    $('input[name^="artsopolis_calendar_options"][name$="[category_valid]"]').val(1);
                 } else {
                     $('.xml-category .artsopolis-calendar-error').show();
                     $('.xml-category .artsopolis-calendar-success').hide();
-                    $('input[name="artsopolis_calendar_options[category_valid]"]').val(0);
+                    $('input[name^="artsopolis_calendar_options"][name$="[category_valid]"]').val(0);
                 }
 
                 parent.show();
@@ -237,8 +290,8 @@
     
     function artsopolis_calendar_check_feed_url_empty() {
         if (! $(this).val()) {
-            $('input[name="artsopolis_calendar_options[feed_valid]"]').val(0);
-            $('input[name="artsopolis_calendar_options[has_changed]"]').val(1);
+            $('input[name^="artsopolis_calendar_options"][name$="[feed_valid]"]').val(0);
+            $('input[name^="artsopolis_calendar_options"][name$="[has_changed]"]').val(1);
         }
     }
     
@@ -258,7 +311,8 @@
         
         /* Paging list */
         $("#artsopolis-calendar-featured-events").dataTable({
-            "aaSorting": [[ 4, "desc" ]],
+            "bProcessing": true,
+            "bSort": ! $( '#ac-feeds' ).val(),
             "fnDrawCallback": function() {
                 // in case your overlay needs to be put away automatically you can put it here
                 $('#artsopolis-calendar-featured-events').css('visibility', 'inherit');
@@ -366,5 +420,32 @@
             }
         };
     }
+    
+    function check_url() {
+       
+        var value    = $(this).val(),
+            expression = "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?", 
+            regex    = new RegExp( expression ),
+            newvalue = value.replace( regex, '' );
+            
+
+        if ( value.match( regex ) == null ) {
+            display_tip_error( $( this ), newvalue );
+        }
+        return this;
+    };
+    
+    function display_tip_error( elm, newvalue ) {
+        
+        elm.val( newvalue );
+        if ( elm.parent().find('.ac_error_tip').size() == 0 ) {
+                var offset = elm.position();
+                elm.after( '<div class="ac_error_tip">This should be a URL format</div>' );
+                $('.ac_error_tip')
+                        .css('left', offset.left + elm.width() - ( elm.width() / 2 ) - ( $('.ac_error_tip').width() / 2 ) )
+                        .css('top', offset.top + elm.height() )
+                        .fadeIn('100');
+        }
+    };
     
 }) (jQuery);

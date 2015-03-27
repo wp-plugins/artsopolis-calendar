@@ -118,6 +118,8 @@ $logo_position = explode('_', $ac_options['plugin_logo_position']);
                                         </div>
 
                                     </div>
+                                    
+                                    
                                 </div>
                             </div>
                         </div><!-- #end filter -->
@@ -185,3 +187,5 @@ $logo_position = explode('_', $ac_options['plugin_logo_position']);
     </a>
 </div>  
 <?php endif; ?>
+
+<input type="hidden" id="ac-fid" value="<?php echo $fid ?>" /> 

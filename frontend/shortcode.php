@@ -18,7 +18,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
         
         public static function init() {
             // handle the shortcode to display in the frontend
-            add_shortcode('artsopolis-calendar-plugin', array(__CLASS__, 'handle_shortcode'));
+            add_shortcode( AC_SHORTCODE_KEY, array(__CLASS__, 'handle_shortcode'));
             
             // Register an action for ajax
             add_action( 'wp_ajax_nopriv_ac_get_feed', array(__CLASS__,'ac_get_feed' ));
@@ -42,56 +42,39 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
 			if (! isset($_GET['event_id']) && ! isset($_GET['category'])) {
 				$_SESSION['artsopolis_calendar_current_url'] = get_site_url(). $_SERVER["REQUEST_URI"];	
 			}
+           
+            extract(shortcode_atts(array(
+                'hour'  => isset($atts['hour']) && $atts['hour'] ? $atts['hour'] : OVERRIDE_TIME_XML_FILE,
+                'fid'   => isset($atts['fid']) && $atts['fid'] ? $atts['fid'] : '',
+            ), $atts));
+            
+            self::init_data( $fid );
             
             // Get options from the settings
-            $ac_options = get_option('artsopolis_calendar_options');
-            extract($ac_options, EXTR_PREFIX_ALL, 'ac');
-            
-            // Save xml data file from the api
-            self::$feed_url = $ac_feed_url;
-            
-            if(! isset($_GET['event_id'])) {
-                extract(shortcode_atts(array(
-                    'hour' => isset($atts['hour']) && $atts['hour'] ? $atts['hour'] : OVERRIDE_TIME_XML_FILE 
-                ), $atts));
-                
-                if (self::check_can_override_xml_file($hour)) {
-                    Artsopolis_Calendar_API::save_xml_data();
-                }
-            }
-         
-            $xml = @simplexml_load_file(XML_FILE_PATH);
-            
-            // Get list location
-            $locations_xml = array();
-            if ($xml == false || ! $ac_options['feed_valid']) {
-                echo 'The feed url is invalid. Please try to check it again';
+            $ac_options = get_option( self::$option_key, false );
+            if ( $ac_options === false ) {
+                echo 'The plugin option is not exist. Please try to check you config again';
                 exit;
             }
             
-            $locations_xml = $xml->xpath('event/venueCity');
-            
-            $_locations = array();
-            if (! empty($locations_xml)) {
-                foreach ($locations_xml as $location) {
-                    if ($l = (string) $location) {
-                        $_locations[rtrim($l)] = $l;
-                    }
-                }
-            }
-            
-            $locations = array_values($_locations);
-            asort($locations);
-           
+            extract($ac_options, EXTR_PREFIX_ALL, 'ac');
+
+            self::$feed_url = $ac_options['feed_url'];
+          
             // Get the category array for filter
             $category_data = self::_process_category_opt( isset( $ac_category ) ? $ac_category : '' );
            
 			if (isset($_GET['event_id']) && $_GET['event_id']) {
+                $xml = @simplexml_load_file(self::$xml_file_path);
                 $event_id = $_GET['event_id'];
                 $event = $xml->xpath("event[eventID=$event_id]");
 				$html_events = self::get_detail_event($event);
 			} else {
 				
+                if (self::check_can_override_xml_file($hour)) {
+                    Artsopolis_Calendar_API::save_xml_data();
+                }
+                
                 // Filter by category when click on the tags
                 if (isset($_GET['category']) && $_GET['category']) {
                     $categories = $_GET['category'];
@@ -113,8 +96,29 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
                 }
                
 	            $html_events = self::get_html_list_events($events, array('page' => 1), isset( $category_data['keys'] ) ? $category_data['keys'] : '' );
+                
+                $xml = @simplexml_load_file(self::$xml_file_path);
 			}
-			
+        
+            if ($xml == false || ! $ac_options['feed_valid']) {
+                echo 'The feed url is invalid. Please try to check it again';
+                exit;
+            }
+		
+            // Get list location
+            $locations_xml = $xml->xpath('event/venueCity');
+            
+            $_locations = array();
+            if (! empty($locations_xml)) {
+                foreach ($locations_xml as $location) {
+                    if ($l = (string) $location) {
+                        $_locations[rtrim($l)] = $l;
+                    }
+                }
+            }
+            $locations = array_values($_locations);
+            asort($locations);
+            
             // Render html and return
             ob_start();
             include dirname(__FILE__). '/frontend-template.php';
@@ -126,7 +130,8 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
 		
         public static function add_meta_tags_fb() {
             $event_id = $_GET['event_id'];
-            $xml = @simplexml_load_file(XML_FILE_PATH);
+            $fid = isset( $_GET['fid'] ) ? $_GET['fid'] : '';
+            $xml = @simplexml_load_file( self::get_xml_fullpath( $fid ) );
 			
 			if (! $xml) {
 				return false;
@@ -177,7 +182,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
 		 * 	
 		 * */
 		public static function get_detail_event($event) {
-			$ac_options = get_option('artsopolis_calendar_options');
+			$ac_options = get_option( self::$option_key );
 			
             if (! $ac_options['category']) {
                 return 'Please select at least a category to display events <a href="/wp-admin/admin.php?page=admin-artsopolis-calendar">Click here</a>';
@@ -197,11 +202,11 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             
             $page_size = FRONT_END_PAGE_SIZE;
             
-            if ( ! file_exists(XML_FILE_PATH) || ! file_get_contents(XML_FILE_PATH) ) {
+            if ( ! file_exists( self::$xml_file_path ) || ! file_get_contents( self::$xml_file_path ) ) {
                 return array();
             }
             
-            $xml = simplexml_load_file(XML_FILE_PATH);
+            $xml = simplexml_load_file( self::$xml_file_path );
            
 //            if ( isset( $arr_filter['first_tab'] ) && !$arr_filter['first_tab'] ) {
 //                $arr_filter['date_end_ongoing'] = '01-01-2037';
@@ -212,7 +217,11 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             $events = $xml->xpath($xpath_query);
 
             // Get options from the settings
-            $ac_options = get_option('artsopolis_calendar_options');
+            
+            $_arr_key = explode( '_', self::$option_key );
+            $fid = $_arr_key ? $_arr_key[count( $_arr_key ) - 1] : '';
+            
+            $ac_options = get_option( self::$option_key );
             
             $settings_display_order = isset($ac_options['settings_display_order']) ?  $ac_options['settings_display_order']: 'START-DATE-ASC';
             $events = self::_sort_events($events, $settings_display_order);
@@ -227,7 +236,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
         private static function _sort_events (&$events , $settings_display_order) {
             switch($settings_display_order) {
                 case 'START-DATE-ASC':
-                    usort($events, 'ac_sort_by_start_date');
+                    usort($events, 'ac_sort_by_start_upcomming_time');
                     break;
                 case 'END-DATE-ASC':
                     usort($events, 'ac_sort_by_end_date');
@@ -303,7 +312,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             
             // If don't have any category param in the filter, 
             // get the list categories selected in the backend
-            $op = get_option('artsopolis_calendar_options'); 
+            $op = get_option( self::$option_key ); 
             if (empty($arr_filter['category']) && ! empty($op['category'])) {
                 $cat_data = self::_process_category_opt($op['category']);
                $arr_filter['category'] = $cat_data['categories'];
@@ -341,7 +350,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
         
         public static function get_html_list_events($events, $arr_filter, $selected_category = array()) {
             
-            $ac_options = get_option('artsopolis_calendar_options');
+            $ac_options = get_option( self::$option_key );
             if (! $ac_options['feed_url']) {
                 $total_event = 0;
                 $events = array();
@@ -375,6 +384,9 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
                 $this_weekend = isset( $_REQUEST['this_weekend'] ) ? $_REQUEST['this_weekend'] : '';
                 $category     = isset( $_REQUEST['category'] ) ? $_REQUEST['category'] : '';
                 $first_tab    = isset( $_REQUEST['first_tab'] ) && $_REQUEST['first_tab'] == 'true';
+                $fid    = isset( $_REQUEST['fid'] ) && $_REQUEST['fid'] ? $_REQUEST['fid'] : '';
+                
+                self::init_data($fid);
                 
                 $arr_filter = array(
                     'page'         => $page,
@@ -389,7 +401,7 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
                 );
                 
                 $arr_events = self::get_list_events_data($arr_filter);
-                $ac_options = get_option('artsopolis_calendar_options');
+                $ac_options = get_option( self::$option_key );
                 
                 // Get the category array for filter
                 $category_data = self::_process_category_opt( isset( $ac_options['category'] ) ? $ac_options['category'] : '' );
@@ -420,15 +432,15 @@ if (!class_exists('Artsopolis_Calendar_Shortcode')) {
             return $event_img;
         }
         
-        public static function get_featured_events() {
+        public static function get_featured_events( $fid = '' ) {
             
-            $selected_events = get_option('artsopolis_calendar_featured_events');
+            $selected_events = get_option( AC_FEATURED_EVENTS. self::get_geed_id( $fid ) );
             
             if ( empty($selected_events) ) {
                 return array();
             }
            
-            $xml = @simplexml_load_file(XML_FILE_PATH);
+            $xml = @simplexml_load_file( self::get_xml_fullpath($fid) );
             
             if ( ! $xml ) {
                 return array();

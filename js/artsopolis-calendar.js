@@ -221,7 +221,8 @@ var delay       = 500, // Delay key up search event
              tags_category  = $('#tags-category').val(),
              category_list  = $('#category-list').val(), // Click on the tags category
              is_first_tab   = jQuery('.eli_content-inner .tabs .tab-links').children().first().hasClass( 'active' ),
-             container_row = is_first_tab ? $("#artsopolis-calendar-list-feed") : $(".tabs .tab-content #ongoing #ongoing-container"); 
+             container_row = is_first_tab ? $("#artsopolis-calendar-list-feed") : $(".tabs .tab-content #ongoing #ongoing-container"),
+             fid = $( '#ac-fid' ).val(); 
         
         // It mean you click on the tags category
         if (tags_category) {
@@ -255,7 +256,8 @@ var delay       = 500, // Delay key up search event
                  keyword: keyword,
                  this_weekend: typeof(this_weekend) != 'undefined' && this_weekend == true ? 1:0,
                  category: category,
-                 first_tab: is_first_tab
+                 first_tab: is_first_tab,
+                 fid: fid,
              },
              beforeSend: function() {
                     artsopolis_calendar_show_loading( container_row );

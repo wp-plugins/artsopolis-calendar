@@ -97,3 +97,23 @@
                value="<?php echo esc_attr( $event_date_color ); ?>" />
     </p>
 </fieldset>
+
+<fieldset  class="teaser-widget-fieldset">
+    <legend>Feed Data</legend>
+    <?php 
+        $feeds = @unserialize( get_option( AC_PLUGIN_OPTION_ARR_KEYS ) );
+    ?>
+    <p>
+        <select id="<?php echo $this->get_field_id( 'teaser_widget_feed_id' ); ?>"
+                name="<?php echo $this->get_field_name('teaser_widget_feed_id'); ?>">
+            <?php 
+                foreach( $feeds as $f ):
+                    $op = get_option( Artsopolis_Calendar_API::get_option_key( $f ) );
+                    if ( ! $op ) continue;
+            ?>
+            <option <?php echo $feed_id == $f ? 'selected' : ''; ?> value="<?php echo $f; ?>"><?php echo $op['title'] ? $op['title'] : 'No title (ID:'.($f ? $f : 0).') ' ?></option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+   
+</fieldset>

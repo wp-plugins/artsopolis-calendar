@@ -2,6 +2,26 @@
 <div class="wrap clear"><style>input[type='text'] { width:200px; padding:4px; } </style>
     <input type="hidden" id="artsopolis-calendar-selected-events" name="artsopolis-calendar-selected-events" value="<?php if ( is_array($selected_events) && !empty($selected_events) ) echo implode(',', $selected_events); ?>" />
     <fieldset>
+        <?php 
+            $feeds = @unserialize( get_option( AC_PLUGIN_OPTION_ARR_KEYS ) );
+            if ( $feeds ):
+        ?>
+        <div id="ac-feed-filter">
+            <label>Filter by Feed</label>    
+            <select id="ac-filter-by-feed" data-href="<?php echo admin_url() ?>admin.php?page=artsopolis-calendar-featured-events&fid=">
+                <option value='-1'><?php _e( 'Select feed', 'apollo' ) ?></option>
+                <?php 
+                    foreach ( $feeds as $f ):
+                        $k = self::get_option_key( $f );
+                        $op = get_option( $k );
+                        if ( ! $op ) continue;
+                        $fid = isset( $_REQUEST['fid'] ) ?  $_REQUEST['fid'] : '';
+                        echo '<option '.( $fid == $f ? 'selected' : '' ).' value="'.($f ? $f : 0).'" >'.( $op['title'] ? $op['title'] : "No title". ' (ID:'.$f. ')' ).'</option>';
+                    endforeach;
+                ?>
+            </select>
+        </div>
+    <?php endif; ?>    
 	<legend><h2>Featured Events Listing</h2></legend>
 	<hr/>
 	<form method="post" >
@@ -35,7 +55,7 @@
                             // Custom url follow the permalink structure
                             $url_ext_sign = ! get_option('permalink_structure') ? '&' : '?';
                             $parent_link = get_site_url().'/'. $ac_options['calendar_slug'];
-                            $link = $parent_link. $url_ext_sign .'event_id='. $event->eventID;
+                            $link = $parent_link. $url_ext_sign .'event_id='. $event->eventID. ( isset( $_GET['fid'] ) && $_GET['fid'] ? '&fid='. $_GET['fid']:'' );
                         }
                 ?>
                         <tr class="odd gradeX">

@@ -30,15 +30,16 @@ foreach ($events as $event):
 		// Custom url follow the permalink structure
 		$url_ext_sign = ! get_option('permalink_structure') ? '&' : '?';
 		$parent_link = get_site_url().'/'. $ac_options['calendar_slug']; 
-		$link = $parent_link. $url_ext_sign .'event_id='. $event->eventID;
+		$link = $parent_link. $url_ext_sign .'event_id='. $event->eventID. ( self::$fid ? '&fid='. self::$fid : '' );
 		$target = '';
 	}
-   
+    
 ?>
 
 <div class="eli_row">
 <h4 class="eli_h4 eli_title">
     <a class="eli_a" <?php echo $target; ?> href="<?php echo $link; ?>"><?php echo $event->eventName; ?></a>
+    <div class="hidden"><?php echo $event->eventDateBegin ?></div>
 </h4>
     
 <span class="eli_span eli_address">

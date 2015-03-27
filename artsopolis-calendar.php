@@ -1,21 +1,29 @@
 <?php
 
 /**
- * @package Artsopolis Calendar plugin
- * @version 1.4.3
+ * @package Artsoplis Calendar plugin
+ * @version 2.0
  */
 /*
-  Plugin Name: Artsopolis Calendar
+  Plugin Name: Artsoplis Calendar
   Plugin URI: http://wordpress.org/plugins/artsopolis-calendar/
-  Description: Artsopolis Calendar
-  Author: Artsopolis
-  Author URI: www.artsopolis.com
-  Version: 1.4.3
+  Description: Artsoplis Calendar
+  Author: Elinext Group
+  Author URI: www.elinext.com
+  Version: 2.0
  */
 
 /* Remove options when uninstall */
 function ac_uninstall() {
-    delete_option('artsopolis_calendar_options');
+    
+    $option_arr = @unserialize( get_option( AC_PLUGIN_OPTION_ARR_KEYS ) );
+    delete_option( ARTSOPOLIS_CALENDAR_OPTIONS );
+    
+    if ( $option_arr ) {
+        foreach ( $option_arr as $op ) {
+            delete_option( Artsopolis_Calendar_API::get_option_key( $op ) );
+        }
+    }
 }
 
 register_uninstall_hook(__FILE__,'ac_uninstall');
@@ -33,13 +41,44 @@ if (! class_exists("Artsopolis_Calendar")) {
             add_action('wp_footer', array(__CLASS__, 'print_scripts'));
             
             add_action( 'widgets_init', array(__CLASS__, 'load_widgets') );
+            
+            add_action('init', array(__CLASS__, 'plugin_updater'));
+        }
+        
+        public static function plugin_updater() {
+            $version = get_option( AC_VERSION, false );
+            $current_version = self::plugin_get_version();
+            
+            if ( $version === false || $version != $current_version ) {
+                self::init_option();
+                update_option( AC_VERSION, $current_version );
+            }
+        }
+        
+        /**
+        * Returns current plugin version.
+        * 
+        * @return string Plugin version
+        */
+        public static function plugin_get_version() {
+            if ( ! function_exists( 'get_plugins' ) )
+                require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            $plugin_folder = get_plugins( '/' . plugin_basename( dirname( __FILE__ ) ) );
+            $plugin_file = basename( ( __FILE__ ) );
+            return $plugin_folder[$plugin_file]['Version'];
         }
 
         public static function ac_active() {
-            
+            self::init_option();
+        }
+
+        public static function init_option() {
             /* Only set when the first time install plugin */
-            if(get_option('artsopolis_calendar_options', false) === false) {
-                update_option('artsopolis_calendar_options', array(
+            $option_arr = get_option( AC_PLUGIN_OPTION_ARR_KEYS, false );
+            $first_opt  = get_option( ARTSOPOLIS_CALENDAR_OPTIONS, false);
+            
+            if ( $first_opt === false ) {
+                update_option( ARTSOPOLIS_CALENDAR_OPTIONS, array(
                     'title'                      => '',                     
                     'feed_url'                   => '',
                     'settings_display_color'     => '#000000',
@@ -65,8 +104,17 @@ if (! class_exists("Artsopolis_Calendar")) {
                 ));
             }
             
+            if ( $option_arr === false ) {
+                $option_arr = array('');
+            } else {
+                $option_arr = @unserialize( $option_arr );
+                $option_arr = array_diff( $option_arr , array( 0 ) );
+                $option_arr[] = '';
+            }
+            
+            update_option( AC_PLUGIN_OPTION_ARR_KEYS, serialize( array_unique( $option_arr ) ) );
         }
-
+        
         public function ac_deactive() {
             // Do nothing
         }
@@ -127,7 +175,10 @@ Artsopolis_Calendar::init();
 if (! class_exists('Artsopolis_Calendar_API')) {
     class Artsopolis_Calendar_API {
         public static   $feed_url,
-                        $categories_url = '';
+                        $categories_url = '',
+                        $option_key = '',
+                        $xml_file_path = '',
+                        $fid = '';
         
         /**
          * Get content from url
@@ -212,18 +263,18 @@ if (! class_exists('Artsopolis_Calendar_API')) {
          */
         public static function save_xml_data() {
             $data = self::get_request_content(self::$feed_url);
-
+            
             if ($data) {
                 
                 self::_create_dir( CALENDAR_UPLOAD_DIR );
                 self::_create_dir( CALENDAR_UPLOAD_DIR. '/'. ac_get_current_domain() );
                 
                 // Process xml file
-                if (! is_writable(XML_FILE_PATH)) {
-                    @chmod(XML_FILE_PATH, 0777);
+                if (! is_writable( self::$xml_file_path )) {
+                    @chmod(self::$xml_file_path, 0777);
                 }
                 
-                $result = @file_put_contents(XML_FILE_PATH, $data);
+                $result = @file_put_contents( self::$xml_file_path, $data);
                 if ($result  === false) {
                     exit('Please set write permission for '.CALENDAR_UPLOAD_DIR.'/'.ac_get_current_domain().' folder');
                 }
@@ -238,17 +289,18 @@ if (! class_exists('Artsopolis_Calendar_API')) {
          * return boolean
          */
         public static function check_can_override_xml_file($hour) {
-            $ac_options = get_option('artsopolis_calendar_options');
+            $ac_options = get_option( self::$option_key );
+            
             $has_change_api = $ac_options['has_changed'];
            
-            $filename = XML_FILE_PATH;
+            $filename = self::$xml_file_path;
             $time_create = @filemtime($filename);
             $can_modify_time = $time_create + $hour * 3600;
             
             // Update option
             if ($ac_options['has_changed']) {
                 $ac_options['has_changed'] = 0;
-                update_option('artsopolis_calendar_options', $ac_options);
+                update_option( self::$option_key, $ac_options);
             }
             
             return ! file_exists($filename) || time() > $can_modify_time || $has_change_api || ! $ac_options['feed_url'];
@@ -303,6 +355,32 @@ if (! class_exists('Artsopolis_Calendar_API')) {
                 $after_sort[$arr[1]] = $arr[0];
             }
             return $after_sort;
+        }
+        
+        public static function get_option_key( $fid = '' ) {
+            return ARTSOPOLIS_CALENDAR_OPTIONS. self::get_geed_id( $fid );
+        }
+        
+        public static function get_geed_id( $fid = '' ) {
+            if ( $fid === 0 ) return '';
+            
+            if ( $fid ) return '_'. intval( $fid );
+            
+            return isset( $_REQUEST['fid'] ) && $_REQUEST['fid'] ? '_'. $_REQUEST['fid'] : '';
+        }
+        
+        public static function get_feature_events_key( $fid ) {
+            return AC_FEATURED_EVENTS. self::get_geed_id( $fid );
+        }
+        
+        public static function init_data( $fid ) {
+            self::$option_key = self::get_option_key($fid);
+            self::$xml_file_path = self::get_xml_fullpath( $fid );
+            self::$fid = $fid;
+        }
+        
+        public static function get_xml_fullpath( $fid ) {
+            return XML_FILE_PATH. '/'. XML_BASE_NAME. self::get_geed_id( $fid ). '.xml';
         }
     }
 }

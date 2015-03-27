@@ -14,6 +14,21 @@ function ac_sort_by_start_date($a, $b) {
     return $s1 > $s2;
 }
 
+function ac_sort_by_start_upcomming_time( $a, $b ) {
+    if ( ! $a->eventDatesTimes->datetime || ! $b->eventDatesTimes->datetime ) {
+        return true;
+    }
+    
+    $s1 = $a->eventDatesTimes->datetime[0]->timestamp;
+    $s2 = $b->eventDatesTimes->datetime[0]->timestamp;
+    
+    if ( intval( $s1 ) == intval( $s2 ) ) {
+        return ac_sort_by_start_date($a, $b);
+    }
+    
+    return intval( $s1 ) > intval( $s2 );
+}
+
 function ac_sort_by_end_date($a, $b) {
     if (! $a->eventDateEnd || ! $b->eventDateEnd) {
         return true;

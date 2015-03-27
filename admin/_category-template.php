@@ -26,7 +26,7 @@
 ?>      
         <div >
             <input <?php if (in_array($key, $category_opts_keys_parent)) {echo 'checked=true';} ?> type="checkbox" 
-        			name="artsopolis_calendar_options[category][<?php echo $key ?>][name]" 
+        			name="<?php echo $option_key ?>[category][<?php echo $key ?>][name]" 
                    	value="<?php echo $name; ?>" id="artsopolis-calendar-settings-category-<?php echo $key; ?>" />
             <label for="artsopolis-calendar-settings-category-<?php echo str_replace(' ', '-', $key) ?>"><?php echo $name; ?></label>
             <?php if ($subs) : ?>
@@ -42,7 +42,7 @@
                             if (isset($category_opts[$key]) && in_array($sub_key, $category_opts_keys_subs)) {
                                 echo 'checked=true';
                             } 
-                        ?> name="artsopolis_calendar_options[category][<?php echo $key ?>][subs][<?php echo $sub_key; ?>]" type="checkbox" value="<?php echo $sub_name; ?>" />
+                        ?> name="<?php echo $option_key ?>[category][<?php echo $key ?>][subs][<?php echo $sub_key; ?>]" type="checkbox" value="<?php echo $sub_name; ?>" />
                     <label><?php echo $sub_name; ?></label>
                 </div>
             <?php endforeach; ?>

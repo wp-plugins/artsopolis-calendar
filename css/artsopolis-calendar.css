@@ -318,7 +318,6 @@ h4.eli_heading-bar {
 .artsopolis-calendar-frontend .eli_row-detail .eli_content,
 .artsopolis-calendar-frontend .eli_row-detail.eli_content {
     padding-left: 15px !important;
-    padding-bottom: 10px !important;
     float: left !important;
     width: 100% !important;
 }
@@ -579,6 +578,7 @@ span.eli_line {
 .artsopolis-calendar-frontend .eli_row h4.eli_title {
     margin: 0  !important;
     padding: 0  !important;
+    /* margin-bottom: 10px !important; */
 }
 
 .artsopolis-calendar-frontend .eli_row h4.eli_title a.eli_a{
@@ -598,7 +598,7 @@ span.eli_line {
 
 .artsopolis-calendar-frontend .eli_row .eli_row-main {
     float: left  !important;
-    margin: 0 0 10px 0  !important;
+    margin: 10px 0 10px 0  !important;
     width: 100%  !important;
 }
 
@@ -613,6 +613,19 @@ span.eli_line {
     margin: 5px 0 0 0  !important;
     height: auto  !important;
     min-height: 100px  !important;
+}
+
+@media ( min-width: 960px ) {
+    .artsopolis-calendar-frontend .eli_row .eli_row-main a.eli_img {
+        max-height: 200px;
+        overflow: hidden;
+    }
+}
+
+@media ( min-width: 1024px ) {
+    .artsopolis-calendar-frontend .eli_row .eli_row-main a.eli_img {
+        width: 220px !important;
+    }
 }
 
 .artsopolis-calendar-frontend .eli_row .eli_row-main .eli_information {
@@ -1103,7 +1116,9 @@ ul.artsopolis-calendar-tabs-menu {
    width: 100%;
     float: left;
     border-bottom: 1px solid #cccccc; 
-    margin-bottom: 20px;
+    
+   margin-bottom: 20px;
+   /* clear: both; */
 }
 
 ul.artsopolis-calendar-tabs-menu li {
@@ -1121,13 +1136,81 @@ ul.artsopolis-calendar-tabs-menu li a {
 ul.artsopolis-calendar-tabs-menu li.active {
     background: #cccccc;
 }
-ul.artsopolis-calendar-tabs-menu li.active a {
-    cursor: default;
-}
+
 ul.artsopolis-calendar-tabs-menu li.active a:hover {
     background: none;
     color: #444;
 }
 #toplevel_page_admin-artsopolis-calendar {
     display: none;
+}
+
+#ac-admin-all-feeds legend {
+    width: 160px;
+    float: left;
+}
+#ac-admin-all-feeds input[type="submit"] {
+    float: right;
+    margin-top: 6px;
+}
+#ac-admin-all-feeds hr {
+    float: left;
+    width: 100%;
+}
+.wrap.artsopolis-calendar #setting-error-settings_updated {
+    clear: both;
+}
+
+.ac_error_tip {
+    background: #d82223;
+    max-width: 20em;
+    white-space: normal;
+    position: absolute;
+    margin: 1.5em 1px 0 -1em;
+    z-index: 9999999;
+    font-size: 11px;
+    color: #fff;
+    padding: .5em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.1);
+    -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.1);
+    box-shadow: 1px 1px 3px rgba(0,0,0,.1);
+    text-align: center;
+    max-width: 150px;
+}
+
+.ac_error_tip:after {
+    content: "";
+    display: block;
+    border: 8px solid #d82223;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    margin: -1em 0 0 -3px;
+}
+.ac-input-error {
+    border: 1px solid #dd3d36 !important;
+}
+
+.wrap.artsopolis-calendar .error.settings-error {
+    display: none;
+}
+.hidden {
+    display: none;
+}
+#artsopolis-calendar-body {
+    clear: both;
+}
+#ac-feed-filter {
+    margin-top: 8px;
+}
+.mar-t0 {
+    margin-top: 0;
+    font-weight: normal;
+    font-style: italic;
 }
