@@ -8,9 +8,9 @@
   Plugin Name: Artsoplis Calendar
   Plugin URI: http://wordpress.org/plugins/artsopolis-calendar/
   Description: Artsoplis Calendar
-  Author: Elinext Group
-  Author URI: www.elinext.com
-  Version: 2.0
+  Author: Artsopolis
+  Author URI: www.artsopolis.com
+  Version: 2.0.1
  */
 
 /* Remove options when uninstall */
@@ -317,26 +317,26 @@ if (! class_exists('Artsopolis_Calendar_API')) {
             $cats = $data->cat_id;
             $sub_cats = $data->subcat_ids;
             
-            if (! count($cats) || ! count($sub_cats)) {
-                return array();
+            if ( !empty($cats) ) {
+                foreach ($cats as $cat) {
+                    $cat = explode('_', (string) $cat);
+                    $result[$cat[0]]['name'] = $cat[2];
+                    $result[$cat[0]]['key']  = $cat[0]. '_'. $cat[1];
+                    $result[$cat[0]]['subcats'] = array();
+                }
             }
             
-            foreach ($cats as $cat) {
-                $cat = explode('_', (string) $cat);
-                $result[$cat[0]]['name'] = $cat[2];
-				$result[$cat[0]]['key']  = $cat[0]. '_'. $cat[1];
-                $result[$cat[0]]['subcats'] = array();
-            }
-           
-            foreach ($sub_cats as $sub_cat) {
+            if ( ! empty( $sub_cats ) ) {
+                foreach ($sub_cats as $sub_cat) {
                 
-                foreach ($sub_cat->subcat_id as $sub_cat_id) {
-                    $sub_cat_id = explode('_', $sub_cat_id);
-                    $result[$sub_cat_id[0]]['subcats'][] = $sub_cat_id[2].'[+]'.$sub_cat_id[0].'_'.$sub_cat_id[1];
+                    foreach ($sub_cat->subcat_id as $sub_cat_id) {
+                        $sub_cat_id = explode('_', $sub_cat_id);
+                        $result[$sub_cat_id[0]]['subcats'][] = $sub_cat_id[2].'[+]'.$sub_cat_id[0].'_'.$sub_cat_id[1];
+                    }
+                    $result[$sub_cat_id[0]]['subcats'] = self::sort_sub_category($result[$sub_cat_id[0]]['subcats']);
                 }
-                $result[$sub_cat_id[0]]['subcats'] = self::sort_sub_category($result[$sub_cat_id[0]]['subcats']);
             }
-			
+            
             $result = self::sort_parent_category($result);
          
             return $result;

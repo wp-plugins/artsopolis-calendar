@@ -1214,3 +1214,6 @@ ul.artsopolis-calendar-tabs-menu li.active a:hover {
     font-weight: normal;
     font-style: italic;
 }
+#artsopolis-calendar-tabs-events .tab-content {
+    display: block !important;
+}

@@ -112,29 +112,28 @@
                     <?php wp_editor( self::get_value_field( 'content' ), 'content', array('textarea_name' => ''.$option_key.'[content]')); ?>
                 </div> <!-- #artsopolis-calendar-->
                 
+                <div id="artsopolis-calendar-widget-settings" class="postbox">
+                    <h3 class="hndle"><span>URL Settings</span></h3>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tbody>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label for="settings-display-color">Artsopolis Calendar's slug:</label>
+                                        </th>
+                                        <td>
+                                            <input name="<?php echo $option_key ?>[calendar_slug]" type="text" id="calendar-slug" value="<?php self::the_value_field( 'calendar_slug' ) ?>" class="regular-text code">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                        </div>
+                </div>
                                 
                 <div id="artsopolis-calendar-widget-settings" class="postbox">
                     <h3 class="hndle"><span>Teaser Widget Settings</span></h3>
                     <div class="inside">
 
-                        <div class="artsopolis-calendar-settings-display child">
-                            <h4 class="hndle"><span>URL Settings</span></h4>
-                            <div class="inside">
-                                <table class="form-table">
-                                    <tbody>
-                                        <tr valign="top">
-                                            <th scope="row">
-                                                <label for="settings-display-color">Artsopolis Calendar's slug:</label>
-                                            </th>
-                                            <td>
-                                                <input name="<?php echo $option_key ?>[calendar_slug]" type="text" id="calendar-slug" value="<?php self::the_value_field( 'calendar_slug' ) ?>" class="regular-text code">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>    
-                            </div>
-                        </div>
-                        
                         <div class="artsopolis-calendar-settings-display child">
                             <h4 class="hndle"><span>Logo Settings</span></h4>
                             <div class="inside">

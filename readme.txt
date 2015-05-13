@@ -1,9 +1,9 @@
 === Artsopolis Calendar ===
-Contributors: nhanlt, vulh
+Contributors: nhanlt, vulh, jef
 Tags: calendar, artsopolis-calendar, artsopolis, apollo
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 2.0
+Tested up to: 4.2.2
+Stable tag: 2.0.1
 License: GPLv2 or later
 
 Arsopolis Calendar will provide a basic list of discount ticket
@@ -64,4 +64,5 @@ Arsopolis Calendar will provide a basic list of discount ticket
 * Allow multi feeds
 * Allow multi teaser widgets
 * Allow site admin to config which teaser widget will associate with specific feed
-* Sort by "Start Date" option will be sorted by first date in bunch of "upcomming date" instead of real "Start Date"
+* Sort by "Start Date" option will be sorted by first date in bunch of "upcomming date" instead of real "Start Date"= 2.0.1 =
+* Bug fixes
