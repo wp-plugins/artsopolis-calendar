@@ -6,11 +6,11 @@ Tested up to: 4.2.2
 Stable tag: 2.0.2
 License: GPLv2 or later
 
-Arsopolis Calendar will provide a basic list of discount ticket
+Artsopolis Calendar provides a searchable calendar of events for Artsopolis Network member content syndication partners
 
 == Description ==
 
-Arsopolis Calendar will provide a basic list of discount ticket
+Artsopolis Calendar provides a searchable calendar of events for Artsopolis Network member content syndication partners.
 
 == Installation ==
 
