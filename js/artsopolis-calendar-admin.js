@@ -277,7 +277,12 @@
     };
 
     function artsopolis_calendar_hide_loading() {
-        tb_remove();
+        
+	try {
+	    tb_remove();
+	} catch(e) {
+            jQuery("#TB_overlay").remove();		
+	}
         jQuery("#TB_load").remove();
     };
     

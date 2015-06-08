@@ -10,7 +10,7 @@
   Description: Artsoplis Calendar
   Author: Artsopolis
   Author URI: www.artsopolis.com
-  Version: 2.0.1
+  Version: 2.0.2
  */
 
 /* Remove options when uninstall */
