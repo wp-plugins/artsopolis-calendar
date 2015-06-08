@@ -120,4 +120,4 @@ This plugin requires a valid API feed URL as issued by an approved Artsopolis Ne
 = 2.0.1 =
 * Bug fixes
 = 2.0.2 =
-* Bug fix on line 280 of js/artsopolis-calendar-admin.js
+* Bug fix on line 280 of js/artsopolis-calendar-admin.js file
