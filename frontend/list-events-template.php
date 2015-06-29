@@ -10,7 +10,7 @@
  */
 ?>
 
-<?php 
+<?php
 
 // Start to get the current url
 if (!session_id()) {
@@ -19,21 +19,21 @@ if (!session_id()) {
 
 $numShowDate = 3;
 if(!empty($events)):
-foreach ($events as $event): 
+foreach ($events as $event):
     $event = self::get_cdata_xml($event);
     $event_img = self::get_event_url($event->eventImage);
-	
+
 	if (! $ac_options['details_link_to']) {
 		$link = $event->link;
 		$target = 'target="_blank"';
 	} else {
 		// Custom url follow the permalink structure
 		$url_ext_sign = ! get_option('permalink_structure') ? '&' : '?';
-		$parent_link = get_site_url().'/'. $ac_options['calendar_slug']; 
+		$parent_link = get_site_url().'/'. $ac_options['calendar_slug'];
 		$link = $parent_link. $url_ext_sign .'event_id='. $event->eventID. ( self::$fid ? '&fid='. self::$fid : '' );
 		$target = '';
 	}
-    
+
 ?>
 
 <div class="eli_row">
@@ -41,7 +41,7 @@ foreach ($events as $event):
     <a class="eli_a" <?php echo $target; ?> href="<?php echo $link; ?>"><?php echo $event->eventName; ?></a>
     <div class="hidden"><?php echo $event->eventDateBegin ?></div>
 </h4>
-    
+
 <span class="eli_span eli_address">
     <span class="eli_span eli_title">Presented by </span><?php echo $event->orgName. ', '. $event->venueName.', '.$event->venueCity; ?>
 </span>
@@ -54,45 +54,45 @@ foreach ($events as $event):
                 <?php if ($event->event_dates_times): ?>
                 <div class="eli_offer-date clear">
                     <span class="eli_span eli_offer-date-title">Upcoming Dates:</span>
-                    <?php 
+                    <?php
                         $i = 0;
                         $total_dates = count($event->event_dates_times);
-                        foreach ($event->event_dates_times as $date_time) { 
-                            
-                           
+                        foreach ($event->event_dates_times as $date_time) {
+
+
                         $datetime = date('m/d/y', strtotime(substr($date_time->date, strpos($date_time->date, '-') + 1))) . ' '.$date_time->time;
-                       
+
                         if ($i < 3) { ?>
                         <span class="eli_span eli_full-price-content eli_full-w-float-l"><?php echo date('D, F d @ g:ia ', strtotime($datetime)); ?></span>
                         <?php echo $i == 2 && $total_dates > 3 ? '<span class="eli_expand-more-dates"> + '.($total_dates - $i - 1).' more dates and times</span>' : ''; ?>
-                    <?php } else { 
+                    <?php } else {
                         echo $i == 3 ? '<p class="eli_p eli_more-date eli_hidden">' : '';
                     ?>
                         <span class="eli_span eli_full-price-content eli_full-w-float-l"><?php echo date('D, F d @ g:ia ', strtotime($datetime)); ?></span>
-                    <?php 
+                    <?php
                         echo $i >= 3 && $i == $total_dates - 1 ? '<span class="eli_span eli_collapse-more-dates">- less dates and times</span></p>' : '';
                         }
                         $i++;
                     } ?>
-                    
+
                 </div>
                 <?php endif; ?>
             </div>
-            
+
             <div class="eli_information-right">
                 <?php if ($event->eventTicketUrl): ?>
                 <div class="eli_button-container">
                     <a  target="_blank" href="<?php echo $event->eventTicketUrl ?>" class="eli_a eli_button eli_large"><span class="eli_span">Buy Tickets</span></a>
                 </div>
                 <?php endif; ?>
-                
+
                 <?php if ($event->discountUrl): ?>
                 <div class="eli_button-container">
                     <a target="_blank" href="<?php echo $event->discountUrl ?>" class="eli_a eli_button eli_large eli_green eli_m-t-5"><span class="eli_span">Check Discounts</span></a>
                 </div>
                 <?php endif; ?>
             </div>
-            
+
         </div>
     </div> <!--#information -->
 
@@ -100,30 +100,32 @@ foreach ($events as $event):
 
 <div class="artsopolis-calendar-summary eli_summary">
     <div class="eli_summary-short">
-        <?php 
-        
-        $desc = strip_tags( str_replace('<br />', '<br/>', html_entity_decode($event->eventDescription)) ) ;
+        <?php
+
+        //$desc = strip_tags( str_replace('<br />', '<br/>', html_entity_decode($event->eventDescription)) ) ;
+        $desc = strip_tags( str_replace('<br />', '<br/>', $event->eventDescription) ) ;
+        $desc = str_replace('&nbsp', ' ', $desc) ;
         $short = explode( ' ',  $desc );
         echo implode(' ', array_slice( $short, 0, 30 ));
         ?>
-        
+
         <?php if ( count( $short ) > 30 ) { ?>
         <a href="javascript:void(0);" class="eli_a eli_expand-summary">[more+]</a>
         <?php } ?>
-       
+
     </div>
-    
+
     <div class="eli_summary-full eli_hidden">
         <?php echo $event->eventDescription; ?>
         <a href="javascript:void(0);" class="eli_a eli_less-summary">[less-]</a>
     </div>
 </div>
-    
+
 <?php if ($event->tags) :
-    $tags = explode(',', $event->tags); 
-    $categories = explode(',', $event->categories); 
-    
-    
+    $tags = explode(',', $event->tags);
+    $categories = explode(',', $event->categories);
+
+
     $cat_comb = array();
     $i = 0;
     foreach ($categories as $cat) {
@@ -133,11 +135,11 @@ foreach ($events as $event):
         $i++;
     }
     $cat_comb_sort = self::sort_tags($cat_comb);
-    
+
     $flag = 0;
 ?>
     <h6 class="eli_h6 eli_tags">Tags:<?php foreach ($cat_comb_sort as $tag): ?><?php $tag = explode('[+]', $tag); ?><?php echo $flag > 0 ? ',' : ''; ?>&nbsp;<a class="eli_a" category-name="<?php echo $tag[0]; ?>" category='<?php echo $tag[1]; ?>'><?php echo $tag[0]; ?></a><?php $flag++; endforeach; ?>
-    </h6> 
+    </h6>
 <?php endif; ?>
 <div style="clear:both"></div>
 

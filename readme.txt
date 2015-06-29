@@ -8,7 +8,7 @@ Requires at least: 3.3
 
 Tested up to: 4.2.2
 
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 
 License: GPLv2 or later
 
@@ -121,3 +121,5 @@ This plugin requires a valid API feed URL as issued by an approved Artsopolis Ne
 * Bug fixes
 = 2.0.2 =
 * Bug fix on line 280 of js/artsopolis-calendar-admin.js file
+= 2.0.3 =
+* Bug fix for incorrectly parsed html entities* Added .jpeg extension to allowed image types
